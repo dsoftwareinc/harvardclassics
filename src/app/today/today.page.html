@@ -3,10 +3,13 @@
         <ion-buttons slot="start">
             <ion-menu-button></ion-menu-button>
         </ion-buttons>
-        <ion-title>Today</ion-title>
+        <ion-title>{{title}}</ion-title>
     </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content padding text-center>
+    <h4>
+        {{header}}
+    </h4>
     <div [innerHTML]="html"></div>
 </ion-content>

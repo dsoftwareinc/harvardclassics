@@ -14,6 +14,8 @@ import 'rxjs/add/operator/catch';
 })
 export class TodayPage implements OnInit {
     day: string;
+    title: string;
+    private header: string;
     private html: string;
     private sub: any;
 
@@ -26,14 +28,20 @@ export class TodayPage implements OnInit {
             this.day = params['day'];
             if (this.day === null || this.day === undefined) {
                 this.day = moment().format('MM-DD');
+                this.title = moment().format('MMMM DD');
                 this.refreshView();
             }
         });
     }
 
     private refreshView() {
-        const month: string = this.day.split('-')[0];
+        const splited = this.day.split('-');
+        const month: string = splited[0];
         console.log(`Loading assets/${month}/${this.day}.html`);
+        this.http.get('assets/index.json')
+            .toPromise().then(json => {
+            this.header = json[month][splited[1]]['title'];
+        });
         this.http.get(`assets/${month}/${this.day}.html`, {responseType: 'text'})
             .toPromise().then((html: string) => {
             this.html = html;
