@@ -5,6 +5,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable, Subject} from 'rxjs';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
+import {MaterialService} from '../services/material.service';
 
 
 @Component({
@@ -20,7 +21,8 @@ export class TodayPage implements OnInit {
     private sub: any;
 
     constructor(private route: ActivatedRoute,
-                private http: HttpClient) {
+                private http: HttpClient,
+                private material: MaterialService,) {
     }
 
     ngOnInit() {
@@ -38,8 +40,7 @@ export class TodayPage implements OnInit {
         const splited = this.day.split('-');
         const month: string = splited[0];
         console.log(`Loading assets/${month}/${this.day}.html`);
-        this.http.get('assets/index.json')
-            .toPromise().then(json => {
+        this.material.ready().then(json => {
             this.header = json[month][splited[1]]['title'];
         });
         this.http.get(`assets/${month}/${this.day}.html`, {responseType: 'text'})
