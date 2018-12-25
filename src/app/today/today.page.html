@@ -13,3 +13,14 @@
     </h4>
     <div [innerHTML]="html"></div>
 </ion-content>
+
+<ion-footer>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-icon name="arrow-back" (click)="calcDay(-1)"></ion-icon>
+        </ion-buttons>
+        <ion-buttons slot="end">
+            <ion-icon name="arrow-forward" (click)="calcDay(+1)"></ion-icon>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-footer>

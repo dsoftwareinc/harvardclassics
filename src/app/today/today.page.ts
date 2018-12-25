@@ -30,13 +30,13 @@ export class TodayPage implements OnInit {
             if (this.day === null || this.day === undefined) {
                 this.day = moment().format('MM-DD');
             }
-            this.title = moment('2016-' + this.day).format('MMMM DD');
             this.refreshView();
         });
     }
 
     private refreshView() {
         this.analytics.trackView(`day-${this.day}`);
+        this.title = moment('2016-' + this.day).format('MMMM DD');
         const splited = this.day.split('-');
         const month: string = splited[0];
         console.log(`Loading assets/${month}/${this.day}.html`);
@@ -58,5 +58,9 @@ export class TodayPage implements OnInit {
         this.sub.unsubscribe();
     }
 
-
+    calcDay(numberOfDays: number) {
+        const date = moment('2015-' + this.day).add(numberOfDays, 'days');
+        this.day = date.format('MM-DD');
+        this.refreshView();
+    }
 }

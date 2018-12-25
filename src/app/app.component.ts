@@ -1,9 +1,9 @@
 import {Component} from '@angular/core';
-
 import {Platform} from '@ionic/angular';
 import {SplashScreen} from '@ionic-native/splash-screen/ngx';
 import {StatusBar} from '@ionic-native/status-bar/ngx';
 import {AnalyticsProvider} from './services/analytics.service';
+import 'hammerjs';
 
 export const MONTHS = ['January',
     'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
