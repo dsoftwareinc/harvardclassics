@@ -41,15 +41,16 @@ export class TodayPage implements OnInit {
         const month: string = splited[0];
         console.log(`Loading assets/${month}/${this.day}.html`);
         this.material.ready().then(json => {
-            const dayData = json[month].filter(item => {
+            const dayData = json[month].find(item => {
                 return item.day === splited[1];
             });
             this.header = dayData['title'];
+            this.html = dayData['content'];
         });
-        this.http.get(`assets/${month}/${this.day}.html`, {responseType: 'text'})
-            .toPromise().then((html: string) => {
-            this.html = html;
-        });
+        // this.http.get(`assets/${month}/${this.day}.html`, {responseType: 'text'})
+        //     .toPromise().then((html: string) => {
+        //     this.html = html;
+        // });
     }
 
 
