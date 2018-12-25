@@ -19,6 +19,10 @@ const routes: Routes = [
         path: 'month/:month',
         loadChildren: './month/month.module#MonthPageModule'
     },
+    {
+        path: 'about',
+        loadChildren: './about/about.module#AboutPageModule'
+    },
 ];
 
 @NgModule({
