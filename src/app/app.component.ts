@@ -3,7 +3,7 @@ import {Component} from '@angular/core';
 import {Platform} from '@ionic/angular';
 import {SplashScreen} from '@ionic-native/splash-screen/ngx';
 import {StatusBar} from '@ionic-native/status-bar/ngx';
-import {GoogleAnalytics} from '@ionic-native/google-analytics';
+import {AnalyticsProvider} from './services/analytics.service';
 
 export const MONTHS = ['January',
     'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
@@ -25,7 +25,7 @@ export class AppComponent {
     constructor(private platform: Platform,
                 private splashScreen: SplashScreen,
                 private statusBar: StatusBar,
-                private ga: GoogleAnalytics) {
+                public analyticsProvider: AnalyticsProvider) {
         MONTHS.forEach((month, index) => {
             this.appPages.push({
                 title: month,
@@ -41,13 +41,6 @@ export class AppComponent {
             this.statusBar.styleDefault();
             this.splashScreen.hide();
         });
-        this.ga.startTrackerWithId('UA-64041785-1')
-            .then(() => {
-                console.log('Google analytics is ready now');
-                this.ga.trackView('test');
-                // Tracker is ready
-                // You can now track pages or set additional information such as AppVersion or UserId
-            })
-            .catch(e => console.log('Error starting GoogleAnalytics', e));
+        this.analyticsProvider.startTrackerWithId('UA-64041785-1');
     }
 }

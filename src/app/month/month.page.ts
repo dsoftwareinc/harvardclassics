@@ -13,8 +13,8 @@ import {MONTHS} from '../app.component';
 export class MonthPage implements OnInit {
     private sub: any;
     private month: string;
-    private monthName: string;
-    private data: Array<any> = null;
+    monthName: string;
+    data: Array<any> = null;
 
     constructor(private route: ActivatedRoute,
                 private material: MaterialService) {

@@ -2,11 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import * as moment from 'moment';
 import {HttpClient} from '@angular/common/http';
-import {Observable, Subject} from 'rxjs';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
 import {MaterialService} from '../services/material.service';
-import {GoogleAnalytics} from '@ionic-native/google-analytics';
+import {AnalyticsProvider} from '../services/analytics.service';
 
 
 @Component({
@@ -17,14 +14,14 @@ import {GoogleAnalytics} from '@ionic-native/google-analytics';
 export class TodayPage implements OnInit {
     day: string;
     title: string;
-    private header: string;
-    private html: string;
+    header: string;
+    html: string;
     private sub: any;
 
     constructor(private route: ActivatedRoute,
                 private http: HttpClient,
                 private material: MaterialService,
-                private ga: GoogleAnalytics) {
+                public analytics: AnalyticsProvider) {
     }
 
     ngOnInit() {
@@ -39,7 +36,7 @@ export class TodayPage implements OnInit {
     }
 
     private refreshView() {
-        this.ga.trackView(`day-${this.day}`).then();
+        this.analytics.trackView(`day-${this.day}`);
         const splited = this.day.split('-');
         const month: string = splited[0];
         console.log(`Loading assets/${month}/${this.day}.html`);
@@ -54,7 +51,6 @@ export class TodayPage implements OnInit {
             this.html = html;
         });
     }
-
 
 
     ngOnDestroy() {
