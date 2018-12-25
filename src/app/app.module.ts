@@ -9,6 +9,7 @@ import {StatusBar} from '@ionic-native/status-bar/ngx';
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
 import {HttpClientModule} from '@angular/common/http';
+import {GoogleAnalytics} from '@ionic-native/google-analytics';
 
 @NgModule({
     declarations: [AppComponent],
@@ -22,6 +23,7 @@ import {HttpClientModule} from '@angular/common/http';
     providers: [
         StatusBar,
         SplashScreen,
+        GoogleAnalytics,
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
     ],
     bootstrap: [AppComponent]

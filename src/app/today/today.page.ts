@@ -6,6 +6,7 @@ import {Observable, Subject} from 'rxjs';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import {MaterialService} from '../services/material.service';
+import {GoogleAnalytics} from '@ionic-native/google-analytics';
 
 
 @Component({
@@ -22,7 +23,8 @@ export class TodayPage implements OnInit {
 
     constructor(private route: ActivatedRoute,
                 private http: HttpClient,
-                private material: MaterialService,) {
+                private material: MaterialService,
+                private ga: GoogleAnalytics) {
     }
 
     ngOnInit() {
@@ -37,6 +39,7 @@ export class TodayPage implements OnInit {
     }
 
     private refreshView() {
+        this.ga.trackView(`day-${this.day}`).then();
         const splited = this.day.split('-');
         const month: string = splited[0];
         console.log(`Loading assets/${month}/${this.day}.html`);
@@ -51,6 +54,8 @@ export class TodayPage implements OnInit {
             this.html = html;
         });
     }
+
+
 
     ngOnDestroy() {
         this.sub.unsubscribe();
