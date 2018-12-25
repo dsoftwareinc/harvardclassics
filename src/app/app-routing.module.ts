@@ -8,11 +8,11 @@ const routes: Routes = [
         pathMatch: 'full'
     },
     {
-        path: 'list',
-        loadChildren: './list/list.module#ListPageModule'
+        path: 'today',
+        loadChildren: './today/today.module#TodayPageModule'
     },
     {
-        path: 'today',
+        path: 'day/:day',
         loadChildren: './today/today.module#TodayPageModule'
     },
     {

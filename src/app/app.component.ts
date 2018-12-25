@@ -19,11 +19,6 @@ export class AppComponent {
             url: '/today',
             icon: 'home'
         },
-        {
-            title: 'List',
-            url: '/list',
-            icon: 'list'
-        }
     ];
 
     constructor(private platform: Platform,

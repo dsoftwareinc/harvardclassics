@@ -8,15 +8,17 @@
 </ion-header>
 
 <ion-content padding>
-    <ion-card *ngFor="let item of data">
+    <ion-card *ngFor="let item of data"
+              [routerLink]="'/day/'+month+'-'+item.day"
+              routerLinkActive="active">
         <ion-card-header>
             {{monthName}} {{item.day}}
         </ion-card-header>
         <ion-card-subtitle>
-            {{item.title}}
+            <img [src]="'assets/'+month+'/'+month+'-'+item.day+'.jpg'"/>
         </ion-card-subtitle>
         <ion-card-content>
-            <img [src]="'assets/'+month+'/'+month+'-'+item.day+'.jpg'"/>
+            {{item.title}}
         </ion-card-content>
     </ion-card>
 

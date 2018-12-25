@@ -30,9 +30,9 @@ export class TodayPage implements OnInit {
             this.day = params['day'];
             if (this.day === null || this.day === undefined) {
                 this.day = moment().format('MM-DD');
-                this.title = moment().format('MMMM DD');
-                this.refreshView();
             }
+            this.title = moment('2016-' + this.day).format('MMMM DD');
+            this.refreshView();
         });
     }
 
@@ -41,7 +41,10 @@ export class TodayPage implements OnInit {
         const month: string = splited[0];
         console.log(`Loading assets/${month}/${this.day}.html`);
         this.material.ready().then(json => {
-            this.header = json[month][splited[1]]['title'];
+            const dayData = json[month].filter(item => {
+                return item.day === splited[1];
+            });
+            this.header = dayData['title'];
         });
         this.http.get(`assets/${month}/${this.day}.html`, {responseType: 'text'})
             .toPromise().then((html: string) => {
