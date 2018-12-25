@@ -33,6 +33,11 @@ export class AppComponent {
                 icon: ''
             });
         });
+        this.appPages.push({
+            title: 'About',
+            url: '/about',
+            icon: ''
+        });
         this.initializeApp();
     }
 
