@@ -13,6 +13,7 @@ export class AnalyticsProvider {
             trackingId: id,
             clientId: localStorage.getItem('ga:clientId')
         });
+        ga('set', 'appName', 'HarvardClassics');
         ga('set', 'checkProtocolTask', null);​
         ga('set', 'transportUrl', 'https://www.google-analytics.com/collect');
         ga(function (tracker) {
@@ -23,9 +24,9 @@ export class AnalyticsProvider {
     }
 
     trackView(screenName) {
-        console.log(screenName);
-        ga('set', 'page', screenName);
-        ga('send', 'pageview');
+        ga('send', 'screenview', {
+            'screenName': screenName,
+        });
     }
 
     trackEvent(category, action, label?, value?) {
