@@ -39,7 +39,7 @@ export class TodayPage implements OnInit {
         this.title = moment('2016-' + this.day).format('MMMM DD');
         const splited = this.day.split('-');
         const month: string = splited[0];
-        console.log(`Loading assets/${month}/${this.day}.html`);
+        console.log(`Loading assets/${month}/${this.day}`);
         this.material.ready().then(json => {
             const dayData = json[month].find(item => {
                 return item.day === splited[1];
