@@ -115,4 +115,20 @@
       color: #ff1493;
     }
   }
+
+  ion-menu-button {
+    zoom: 1.5;
+    color: #ff1493;
+  }
+  ion-menu-toggle {
+    ion-icon {
+      zoom: 1.5;
+      color: #ff1493;
+    }
+    ion-label {
+      zoom: 1.3;
+      color: #ff1493;
+    }
+  }
+
 }
