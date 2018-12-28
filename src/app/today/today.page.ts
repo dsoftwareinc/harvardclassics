@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import * as moment from 'moment';
 import {HttpClient} from '@angular/common/http';
@@ -12,6 +12,7 @@ import {AnalyticsProvider} from '../services/analytics.service';
     styleUrls: ['./today.page.scss'],
 })
 export class TodayPage implements OnInit {
+    @ViewChild('content') content;
     day: string;
     title: string;
     header: string;
@@ -46,6 +47,7 @@ export class TodayPage implements OnInit {
             });
             this.header = dayData['title'];
             this.html = dayData['content'];
+            this.content.scrollToTop();
         });
         // this.http.get(`assets/${month}/${this.day}.html`, {responseType: 'text'})
         //     .toPromise().then((html: string) => {
