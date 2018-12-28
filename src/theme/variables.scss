@@ -75,7 +75,7 @@
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
 
-  --ion-font-family: "Verdana", "Arial", serif;
+  --ion-font-family: "Helvetica";
 
   --pink-color: #ff1493;
 
@@ -91,6 +91,10 @@
 
     img {
       width: 100%;
+    }
+
+    blockquote {
+      font-family: "Frutiger";
     }
   }
 
