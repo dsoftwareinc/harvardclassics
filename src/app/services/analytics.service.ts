@@ -24,17 +24,21 @@ export class AnalyticsProvider {
     }
 
     trackView(screenName) {
-        ga('send', 'screenview', {
-            'screenName': screenName,
-        });
+        if (ga) {
+            ga('send', 'screenview', {
+                'screenName': screenName,
+            });
+        }
     }
 
     trackEvent(category, action, label?, value?) {
-        ga('send', 'event', {
-            eventCategory: category,
-            eventLabel: label,
-            eventAction: action,
-            eventValue: value
-        });
+        if (ga) {
+            ga('send', 'event', {
+                eventCategory: category,
+                eventLabel: label,
+                eventAction: action,
+                eventValue: value
+            });
+        }
     }
 }
