@@ -1,0 +1,19 @@
+
+ion-card {
+  ion-card-title {
+    margin-bottom: 10px;
+  }
+
+  ion-card-subtitle {
+    text-transform: none;
+    font-size: 18px;
+    line-height: 1.58;
+    letter-spacing: -.004em;
+  }
+
+  ion-card-content img {
+    max-height: 250px;
+    width: auto;
+    margin: auto;
+  }
+}
