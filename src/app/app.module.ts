@@ -14,14 +14,17 @@ import {environment} from '../environments/environment';
 import {AnalyticsProvider} from './services/analytics.service';
 
 @NgModule({
-    declarations: [AppComponent],
-    entryComponents: [],
+    declarations: [AppComponent,
+    ],
+    entryComponents: [
+    ],
     imports: [
         HttpClientModule,
         BrowserModule,
         IonicModule.forRoot(),
         AppRoutingModule,
-        ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production})
+        ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
+        ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
     ],
     providers: [
         StatusBar,
