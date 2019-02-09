@@ -1,26 +1,28 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { Routes, RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
+import {Routes, RouterModule} from '@angular/router';
 
-import { IonicModule } from '@ionic/angular';
-
-import { MonthPage } from './month.page';
+import {IonicModule} from '@ionic/angular';
+import { CalendarModule } from 'ion2-calendar';
+import {MonthPage} from './month.page';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: MonthPage
-  }
+    {
+        path: '',
+        component: MonthPage
+    }
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    RouterModule.forChild(routes)
-  ],
-  declarations: [MonthPage]
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        CalendarModule,
+        RouterModule.forChild(routes),
+    ],
+    declarations: [MonthPage]
 })
-export class MonthPageModule {}
+export class MonthPageModule {
+}

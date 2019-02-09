@@ -4,6 +4,7 @@ import {ActivatedRoute} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {MaterialService} from '../services/material.service';
 import {MONTHS} from '../app.component';
+import {CalendarComponentOptions} from 'ion2-calendar';
 
 @Component({
     selector: 'app-month',
@@ -15,6 +16,12 @@ export class MonthPage implements OnInit {
     private month: string;
     monthName: string;
     data: Array<any> = null;
+    optionsMulti: CalendarComponentOptions = {
+        pickMode: 'multi',
+        from: moment().startOf('year').toDate(),
+        to: moment().endOf('year').toDate(),
+    };
+
 
     constructor(private route: ActivatedRoute,
                 private material: MaterialService) {

@@ -8,6 +8,11 @@
 </ion-header>
 
 <ion-content padding>
+    <ion-calendar [(ngModel)]="dateMulti"
+                  [options]="optionsMulti"
+                  [type]="type"
+                  [format]="'YYYY-MM-DD'">
+    </ion-calendar>
     <ion-card *ngFor="let item of data"
               [routerLink]="'/day/'+month+'-'+item.day"
               routerLinkActive="active">
