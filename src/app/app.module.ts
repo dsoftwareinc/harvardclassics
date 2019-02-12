@@ -12,19 +12,24 @@ import {HttpClientModule} from '@angular/common/http';
 import {ServiceWorkerModule} from '@angular/service-worker';
 import {environment} from '../environments/environment';
 import {AnalyticsProvider} from './services/analytics.service';
+import {AngularFireModule} from '@angular/fire';
+import {AngularFirestoreModule} from '@angular/fire/firestore';
+import {AngularFireAuthModule} from '@angular/fire/auth';
 
 @NgModule({
     declarations: [AppComponent,
     ],
-    entryComponents: [
-    ],
+    entryComponents: [],
     imports: [
         HttpClientModule,
         BrowserModule,
         IonicModule.forRoot(),
         AppRoutingModule,
         ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
-        ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+        ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
+        AngularFireModule.initializeApp(environment.firebase),
+        AngularFirestoreModule,
+        AngularFireAuthModule,
     ],
     providers: [
         StatusBar,
