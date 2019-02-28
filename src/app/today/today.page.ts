@@ -20,6 +20,7 @@ export class TodayPage implements OnInit {
     html: string;
     private sub: any;
     progress = 0;
+    private clientHeight = 0;
 
     constructor(private route: ActivatedRoute,
                 private http: HttpClient,
@@ -28,6 +29,7 @@ export class TodayPage implements OnInit {
     }
 
     ngOnInit() {
+        this.clientHeight = this.content.el.clientHeight;
         this.sub = this.route.params.subscribe(params => {
             this.day = params['day'];
             if (this.day === null || this.day === undefined) {
@@ -38,7 +40,7 @@ export class TodayPage implements OnInit {
     }
 
     onPageScroll(event) {
-        this.progress = (event.detail.scrollTop + 300) /
+        this.progress = (event.detail.scrollTop + this.clientHeight) /
             this.articleContent.nativeElement.offsetHeight;
     }
 
