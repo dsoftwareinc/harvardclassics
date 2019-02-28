@@ -38,8 +38,10 @@ export class AppComponent {
 
     initializeApp() {
         this.platform.ready().then(() => {
-            this.statusBar.styleDefault();
-            this.splashScreen.hide();
+            if (this.platform.is('cordova')) {
+                this.statusBar.styleDefault();
+                this.splashScreen.hide();
+            }
         });
         this.analyticsProvider.startTrackerWithId('UA-64041785-1');
     }
