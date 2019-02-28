@@ -5,13 +5,16 @@
         </ion-buttons>
         <ion-title>{{title}}</ion-title>
     </ion-toolbar>
+    <ion-progress-bar [value]="progress" color="primary"></ion-progress-bar>
 </ion-header>
 
-<ion-content padding #content>
+<ion-content padding #content
+             scrollEvents="true"
+             (ionScroll)="onPageScroll($event)">
     <h4 text-center>
         {{header}}
     </h4>
-    <div [innerHTML]="html"></div>
+    <div #articleContent [innerHTML]="html"></div>
 </ion-content>
 
 <ion-footer>

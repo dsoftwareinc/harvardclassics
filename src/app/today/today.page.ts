@@ -13,11 +13,13 @@ import {AnalyticsProvider} from '../services/analytics.service';
 })
 export class TodayPage implements OnInit {
     @ViewChild('content') content;
+    @ViewChild('articleContent') articleContent;
     day: string;
     title: string;
     header: string;
     html: string;
     private sub: any;
+    progress = 0;
 
     constructor(private route: ActivatedRoute,
                 private http: HttpClient,
@@ -33,6 +35,11 @@ export class TodayPage implements OnInit {
             }
             this.refreshView();
         });
+    }
+
+    onPageScroll(event) {
+        this.progress = (event.detail.scrollTop + 300) /
+            this.articleContent.nativeElement.offsetHeight;
     }
 
     private refreshView() {
