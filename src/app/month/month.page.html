@@ -7,13 +7,17 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
-    <ion-calendar [(ngModel)]="dateMulti"
+<ion-content padding #content>
+    <ion-calendar #calendar
+                  [(ngModel)]="dateMulti"
+                  (select)="onSelect($event)"
                   [options]="optionsMulti"
-                  [type]="type"
-                  [format]="'YYYY-MM-DD'">
+                  type="string"
+                  [format]="'MM-DD'">
     </ion-calendar>
+
     <ion-card *ngFor="let item of data"
+              [id]="month+'-'+item.day"
               [routerLink]="'/day/'+month+'-'+item.day"
               routerLinkActive="active">
         <ion-card-header>
