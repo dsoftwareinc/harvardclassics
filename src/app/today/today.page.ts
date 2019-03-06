@@ -29,7 +29,6 @@ export class TodayPage implements OnInit {
     }
 
     ngOnInit() {
-        this.clientHeight = this.content.el.clientHeight;
         this.sub = this.route.params.subscribe(params => {
             this.day = params['day'];
             if (this.day === null || this.day === undefined) {
@@ -37,6 +36,10 @@ export class TodayPage implements OnInit {
             }
             this.refreshView();
         });
+    }
+
+    ionViewDidEnter() {
+        this.clientHeight = this.content.el.clientHeight;
     }
 
     onPageScroll(event) {
