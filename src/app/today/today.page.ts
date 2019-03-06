@@ -40,6 +40,7 @@ export class TodayPage implements OnInit {
 
     ionViewDidEnter() {
         this.clientHeight = this.content.el.clientHeight;
+        this.progress = this.clientHeight / this.articleContent.nativeElement.offsetHeight;
     }
 
     onPageScroll(event) {
