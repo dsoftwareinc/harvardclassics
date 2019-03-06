@@ -18,6 +18,7 @@ export class MonthPage implements OnInit {
     private month: string;
     monthName: string;
     data: Array<any> = null;
+    dateMulti: string[] = [];
     optionsMulti: CalendarComponentOptions = {
         pickMode: 'multi',
         from: moment().startOf('year').toDate(),
@@ -25,7 +26,6 @@ export class MonthPage implements OnInit {
         showMonthPicker: false,
         showToggleButtons: false,
     };
-    dateMulti: string[] = [];
 
 
     constructor(private router: Router,
@@ -35,10 +35,10 @@ export class MonthPage implements OnInit {
     }
 
     onSelect(dateSelected) {
+        const day = dateSelected.title.length < 2 ? `0${dateSelected.title}` : dateSelected.title;
         // const yOffset = document.getElementById(`${this.month}-${dateSelected.title}`).offsetTop;
         // this.content.scrollTo(0, yOffset, 1000);
-        console.log(this.dateMulti);
-        this.router.navigateByUrl(`/day/${this.month}-${dateSelected.title}`).then();
+        this.router.navigateByUrl(`/day/${this.month}-${day}`).then();
     }
 
     ngOnInit() {
@@ -46,7 +46,6 @@ export class MonthPage implements OnInit {
             this.month = params['month'];
             this.optionsMulti.from = moment().set('month', Number(this.month) - 1).startOf('month').toDate();
             this.optionsMulti.to = moment().set('month', Number(this.month) - 1).endOf('month').toDate();
-            // this.calendarRef.setViewDate(this.optionsMulti.from);
             if (this.month.length < 2) {
                 this.month = '0' + this.month;
             }
@@ -55,6 +54,10 @@ export class MonthPage implements OnInit {
         this.material.ready().then(json => {
             this.data = json[this.month];
         });
+    }
+
+    ionViewDidEnter() {
+        this.calendarRef.setViewDate(this.optionsMulti.from);
     }
 
     ngOnDestroy() {
