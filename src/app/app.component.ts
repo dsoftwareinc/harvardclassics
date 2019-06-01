@@ -4,6 +4,9 @@ import {SplashScreen} from '@ionic-native/splash-screen/ngx';
 import {StatusBar} from '@ionic-native/status-bar/ngx';
 import {AnalyticsProvider} from './services/analytics.service';
 import 'hammerjs';
+import {Facebook} from '@ionic-native/facebook/ngx';
+import {AngularFireAuth} from '@angular/fire/auth';
+import {auth} from 'firebase/app';
 
 export const MONTHS = ['January',
     'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
@@ -25,6 +28,8 @@ export class AppComponent {
     constructor(private platform: Platform,
                 private splashScreen: SplashScreen,
                 private statusBar: StatusBar,
+                public facebook: Facebook,
+                public afAuth: AngularFireAuth,
                 public analyticsProvider: AnalyticsProvider) {
         MONTHS.forEach((month, index) => {
             this.appPages.push({
@@ -45,4 +50,10 @@ export class AppComponent {
         });
         this.analyticsProvider.startTrackerWithId('UA-64041785-1');
     }
+
+    login(method: string) {
+        const authProvider = method === 'facebook' ? new auth.FacebookAuthProvider() : new auth.GoogleAuthProvider();
+        this.afAuth.auth.signInWithPopup(authProvider).then();
+    }
+
 }

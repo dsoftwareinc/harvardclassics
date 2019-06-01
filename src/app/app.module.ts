@@ -15,6 +15,7 @@ import {AnalyticsProvider} from './services/analytics.service';
 import {AngularFireModule} from '@angular/fire';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {AngularFireAuthModule} from '@angular/fire/auth';
+import {Facebook} from '@ionic-native/facebook/ngx';
 
 @NgModule({
     declarations: [AppComponent,
@@ -26,7 +27,6 @@ import {AngularFireAuthModule} from '@angular/fire/auth';
         IonicModule.forRoot(),
         AppRoutingModule,
         ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
-        ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
         AngularFireModule.initializeApp(environment.firebase),
         AngularFirestoreModule,
         AngularFireAuthModule,
@@ -35,6 +35,7 @@ import {AngularFireAuthModule} from '@angular/fire/auth';
         StatusBar,
         SplashScreen,
         AnalyticsProvider,
+        Facebook,
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
     ],
     bootstrap: [AppComponent]

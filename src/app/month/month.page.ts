@@ -4,7 +4,6 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {MaterialService} from '../services/material.service';
 import {MONTHS} from '../app.component';
 import {CalendarComponent, CalendarComponentOptions} from 'ion2-calendar';
-import {routerNgProbeToken} from '@angular/router/src/router_module';
 
 @Component({
     selector: 'app-month',
@@ -12,8 +11,8 @@ import {routerNgProbeToken} from '@angular/router/src/router_module';
     styleUrls: ['./month.page.scss'],
 })
 export class MonthPage implements OnInit {
-    @ViewChild('calendar', {read: CalendarComponent}) calendarRef: CalendarComponent;
-    @ViewChild('content') content;
+    @ViewChild('calendar', {read: CalendarComponent, static: true}) calendarRef: CalendarComponent;
+    @ViewChild('content', {static: true}) content;
     private sub: any;
     private month: string;
     monthName: string;

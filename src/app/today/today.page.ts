@@ -12,8 +12,8 @@ import {AnalyticsProvider} from '../services/analytics.service';
     styleUrls: ['./today.page.scss'],
 })
 export class TodayPage implements OnInit {
-    @ViewChild('content') content;
-    @ViewChild('articleContent') articleContent;
+    @ViewChild('content', {static: true}) content;
+    @ViewChild('articleContent', {static: true}) articleContent;
     day: string;
     title: string;
     header: string;
