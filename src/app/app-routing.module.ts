@@ -23,6 +23,11 @@ const routes: Routes = [
         path: 'about',
         loadChildren: './about/about.module#AboutPageModule'
     },
+    {
+        path: 'login',
+        loadChildren: './login/login.module#LoginPageModule'
+    },
+  { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
 ];
 
 @NgModule({

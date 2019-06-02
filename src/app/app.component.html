@@ -13,6 +13,11 @@
                             {{p.title}}
                         </ion-label>
                     </ion-item>
+                    <ion-item [routerDirection]="'root'"
+                              routerLink="/login">
+                        Login
+                    </ion-item>
+                    <!--
                     <ion-item (click)="login('google')">
                         <ion-label>
                             Google Login
@@ -23,6 +28,7 @@
                             Facebook Login
                         </ion-label>
                     </ion-item>
+                    -->
                     <ion-item [routerDirection]="'root'"
                               routerLink="/about">
                         <ion-label>
