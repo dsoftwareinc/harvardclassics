@@ -10,7 +10,7 @@ export class LoginPage implements OnInit {
     userEmail: string = '';
     userPassword: string = '';
 
-    constructor(private  authService: AuthService,) {
+    constructor(public authService: AuthService) {
 
     }
 

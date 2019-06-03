@@ -10,7 +10,7 @@ export class SignupPage implements OnInit {
   userEmail: string;
   userPassword: string;
 
-  constructor(private  authService: AuthService,) { }
+  constructor(public authService: AuthService) { }
 
   ngOnInit() {
   }
