@@ -13,3 +13,5 @@ export const environment = {
         messagingSenderId: '319043773098'
     },
 };
+export const APPLICATION_NAME = 'HarvardClassics';
+export const GOOGLE_ANALYTICS_ID = 'UA-64041785-1';

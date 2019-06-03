@@ -1,13 +1,13 @@
 // Ionic Variables and Theming. For more info, please see:
 // http://ionicframework.com/docs/theming/
 
-/** Ionic CSS Variables **/
-@font-face {
-  font-family: 'Kievit';
-  font-style: normal;
-  font-weight: 400;
-  src: url('../assets/fonts/FF-Kievit-Pro-Medium.otf') format('otf');
-}
+///** Ionic CSS Variables **/
+//@font-face {
+//  font-family: 'Kievit';
+//  font-style: normal;
+//  font-weight: 400;
+//  src: url('../assets/fonts/FF-Kievit-Pro-Medium.otf') format('otf');
+//}
 
 :root {
   /** primary **/
@@ -82,7 +82,7 @@
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
 
-  --ion-font-family: "Kievit", Serif;
+  --ion-font-family: "Roboto", Serif;
 
   --pink-color: #ff1493;
 

@@ -4,7 +4,8 @@ import {SplashScreen} from '@ionic-native/splash-screen/ngx';
 import {StatusBar} from '@ionic-native/status-bar/ngx';
 import {AnalyticsProvider} from './services/analytics.service';
 import 'hammerjs';
-import {Facebook} from '@ionic-native/facebook/ngx';
+import {GOOGLE_ANALYTICS_ID} from '../environments/environment';
+import {ReadingDbService} from './services/readingdb.service';
 
 export const MONTHS = ['January',
     'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
@@ -26,7 +27,7 @@ export class AppComponent {
     constructor(private platform: Platform,
                 private splashScreen: SplashScreen,
                 private statusBar: StatusBar,
-                public facebook: Facebook,
+                private readDb: ReadingDbService,
                 public analyticsProvider: AnalyticsProvider) {
         MONTHS.forEach((month, index) => {
             this.appPages.push({
@@ -45,6 +46,6 @@ export class AppComponent {
                 this.splashScreen.hide();
             }
         });
-        this.analyticsProvider.startTrackerWithId('UA-64041785-1');
+        this.analyticsProvider.startTrackerWithId(GOOGLE_ANALYTICS_ID);
     }
 }

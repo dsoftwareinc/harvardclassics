@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {APPLICATION_NAME} from '../../environments/environment';
 
 declare var ga: Function;
 
@@ -13,7 +14,7 @@ export class AnalyticsProvider {
             trackingId: id,
             clientId: localStorage.getItem('ga:clientId')
         });
-        ga('set', 'appName', 'HarvardClassics');
+        ga('set', 'appName', APPLICATION_NAME);
         ga('set', 'checkProtocolTask', null);​
         ga('set', 'transportUrl', 'https://www.google-analytics.com/collect');
         ga(function (tracker) {

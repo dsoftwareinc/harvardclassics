@@ -4,6 +4,8 @@ import * as moment from 'moment';
 import {HttpClient} from '@angular/common/http';
 import {MaterialService} from '../services/material.service';
 import {AnalyticsProvider} from '../services/analytics.service';
+import {Events} from '@ionic/angular';
+import {EVENT_FINISHED_READING} from '../constants';
 
 
 @Component({
@@ -21,11 +23,13 @@ export class TodayPage implements OnInit {
     private sub: any;
     progress = 0;
     private clientHeight = 0;
+    private markAsRead: boolean = false;
 
     constructor(private route: ActivatedRoute,
                 private http: HttpClient,
                 private material: MaterialService,
-                public analytics: AnalyticsProvider) {
+                private events: Events,
+                private analytics: AnalyticsProvider) {
     }
 
     ngOnInit() {
@@ -46,6 +50,10 @@ export class TodayPage implements OnInit {
     onPageScroll(event) {
         this.progress = (event.detail.scrollTop + this.clientHeight) /
             this.articleContent.nativeElement.offsetHeight;
+        if (this.progress >= 1 && !this.markAsRead) {
+            this.markAsRead = true;
+            this.events.publish(EVENT_FINISHED_READING, this.day);
+        }
     }
 
     private refreshView() {

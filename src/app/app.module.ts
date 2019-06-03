@@ -16,6 +16,7 @@ import {AngularFireModule} from '@angular/fire';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {AngularFireAuthModule} from '@angular/fire/auth';
 import {Facebook} from '@ionic-native/facebook/ngx';
+import {ReadingDbService} from './services/readingdb.service';
 
 @NgModule({
     declarations: [AppComponent,
@@ -36,6 +37,7 @@ import {Facebook} from '@ionic-native/facebook/ngx';
         SplashScreen,
         AnalyticsProvider,
         Facebook,
+        ReadingDbService,
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
     ],
     bootstrap: [AppComponent]

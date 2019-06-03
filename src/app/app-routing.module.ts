@@ -1,33 +1,14 @@
 import {NgModule} from '@angular/core';
-import {Routes, RouterModule} from '@angular/router';
+import {RouterModule, Routes} from '@angular/router';
 
 const routes: Routes = [
-    {
-        path: '',
-        redirectTo: 'today',
-        pathMatch: 'full'
-    },
-    {
-        path: 'today',
-        loadChildren: './today/today.module#TodayPageModule'
-    },
-    {
-        path: 'day/:day',
-        loadChildren: './today/today.module#TodayPageModule'
-    },
-    {
-        path: 'month/:month',
-        loadChildren: './month/month.module#MonthPageModule'
-    },
-    {
-        path: 'about',
-        loadChildren: './about/about.module#AboutPageModule'
-    },
-    {
-        path: 'login',
-        loadChildren: './login/login.module#LoginPageModule'
-    },
-  { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
+    {path: '', redirectTo: 'today', pathMatch: 'full'},
+    {path: 'today', loadChildren: './today/today.module#TodayPageModule'},
+    {path: 'day/:day', loadChildren: './today/today.module#TodayPageModule'},
+    {path: 'month/:month', loadChildren: './month/month.module#MonthPageModule'},
+    {path: 'about', loadChildren: './about/about.module#AboutPageModule'},
+    {path: 'login', loadChildren: './auth/login/login.module#LoginPageModule'},
+    {path: 'signup', loadChildren: './auth/signup/signup.module#SignupPageModule'},
 ];
 
 @NgModule({

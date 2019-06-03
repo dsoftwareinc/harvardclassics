@@ -1,0 +1,53 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>Login</ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <ion-list>
+        <ion-item>
+            <ion-label position="floating">email</ion-label>
+            <ion-input inputmode="email" [(ngModel)]="userEmail" required autofocus></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label position="floating">Password</ion-label>
+            <ion-input type="password" [(ngModel)]="userPassword" required></ion-input>
+        </ion-item>
+        <ion-button expand="full" color="dark" (click)="authService.emailLogin(userEmail, userPassword)">
+            Email Login
+        </ion-button>
+        <ion-item-divider></ion-item-divider>
+        <ion-item-group>
+            <ion-button expand="full" color="danger" (click)="authService.googleLogin()">
+                Google Login
+            </ion-button>
+            <ion-button expand="full" color="primary" (click)="authService.facebookLogin()">
+                Facebook Login
+            </ion-button>
+        </ion-item-group>
+
+
+        <ion-item-divider></ion-item-divider>
+        <ion-item-group>
+            <ion-button expand="full"
+                        color="dark"
+                        [routerDirection]="'root'"
+                        routerLink="/signup">
+                Signup new user
+            </ion-button>
+        </ion-item-group>
+
+        <!-- Information about current user -->
+        <ion-item>
+            <ion-label>
+                {{authService.isLoggedIn ? 'Logged in as ' + authService.user?.email : 'Not logged in'}}
+            </ion-label>
+            <ion-button (click)="authService.logout()" [disabled]="!authService.isLoggedIn">
+                Logout
+            </ion-button>
+        </ion-item>
+    </ion-list>
+</ion-content>
