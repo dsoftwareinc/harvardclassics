@@ -7,8 +7,8 @@ import {AuthService} from '../auth.service';
     styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-    userEmail: string = '';
-    userPassword: string = '';
+    userEmail: string;
+    userPassword: string;
 
     constructor(public authService: AuthService) {
 
