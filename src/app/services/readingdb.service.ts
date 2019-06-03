@@ -13,7 +13,7 @@ export interface Item {
 })
 export class ReadingDbService {
     private email: string = null;
-    private userDoc: AngularFirestoreDocument<Item>;
+    private userDoc: AngularFirestoreDocument<Item> = null;
 
     constructor(private afAuth: AngularFireAuth,
                 private events: Events,
@@ -30,7 +30,7 @@ export class ReadingDbService {
         });
     }
 
-    addItem(day: string) {
+    addItem(day: string): void {
         if (this.email === null) {
             console.log('User not logged in, not saving days read');
             return;
@@ -50,8 +50,15 @@ export class ReadingDbService {
     }
 
     daysRead() {
+        if (this.email === null) {
+            console.log('User not logged in, not returning days read');
+            return;
+        }
         return this.userDoc.valueChanges();
     }
 
+    get ready() {
+        return this.userDoc !== null;
+    }
 
 }

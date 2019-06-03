@@ -4,6 +4,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {MaterialService} from '../services/material.service';
 import {MONTHS} from '../app.component';
 import {CalendarComponent, CalendarComponentOptions} from 'ion2-calendar';
+import {ReadingDbService} from '../services/readingdb.service';
+import {AuthService} from '../auth/auth.service';
 
 @Component({
     selector: 'app-month',
@@ -27,10 +29,11 @@ export class MonthPage implements OnInit {
     };
 
 
-    constructor(private router: Router,
+    constructor(private auth: AuthService,
+                private router: Router,
                 private route: ActivatedRoute,
-                private material: MaterialService) {
-
+                private material: MaterialService,
+                private readDb: ReadingDbService) {
     }
 
     onSelect(dateSelected) {
@@ -50,6 +53,14 @@ export class MonthPage implements OnInit {
             }
             this.monthName = MONTHS[Number(this.month) - 1];
         });
+        if (this.readDb.ready) {
+            this.readDb.daysRead().subscribe(data => {
+                const year = moment().year();
+                this.dateMulti = [];
+                data.days.forEach(x => this.dateMulti.push(year + '-' + x));
+                console.log(this.dateMulti);
+            });
+        }
         this.material.ready().then(json => {
             this.data = json[this.month];
         });
