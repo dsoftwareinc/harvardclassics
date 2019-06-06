@@ -26,11 +26,11 @@ export class ReadingDbService {
             }
         });
         events.subscribe(EVENT_FINISHED_READING, day => {
-            this.addItem(day);
+            this.markDayAsRead(day);
         });
     }
 
-    addItem(day: string): void {
+    private markDayAsRead(day: string): void {
         if (this.email === null) {
             console.log('User not logged in, not saving days read');
             return;
