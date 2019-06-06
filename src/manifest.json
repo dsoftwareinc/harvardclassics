@@ -1,9 +1,10 @@
 {
-  "name": "app",
-  "short_name": "app",
+  "name": "Harvard Classics App",
+  "short_name": "HarvardClassicsApp",
   "theme_color": "#1976d2",
   "background_color": "#fafafa",
   "display": "standalone",
+  "orientation": "portrait",
   "scope": "/",
   "start_url": "/",
   "icons": [

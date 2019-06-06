@@ -1,11 +1,12 @@
 {
-  "name": "app",
-  "short_name": "app",
+  "name": "Harvard Classics App",
+  "short_name": "HarvardClassicsApp",
   "theme_color": "#1976d2",
   "background_color": "#fafafa",
   "display": "standalone",
   "scope": "/",
   "start_url": "/",
+  "orientation": "portrait"
   "icons": [
      {
          "src": "assets/icons/android-launchericon-72-72.png",

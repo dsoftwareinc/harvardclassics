@@ -6,6 +6,7 @@ import {MaterialService} from '../services/material.service';
 import {AnalyticsProvider} from '../services/analytics.service';
 import {Events} from '@ionic/angular';
 import {EVENT_FINISHED_READING} from '../constants';
+import {TextSelectEventDirective} from './text-select-event.directive';
 
 
 @Component({
@@ -76,6 +77,15 @@ export class TodayPage implements OnInit {
         // });
     }
 
+    public renderRectangles(event: TextSelectEventDirective): void {
+
+        console.group('Text Select Event');
+        console.log('Text:', event.text);
+        console.log('Viewport Rectangle:', event.viewportRectangle);
+        console.log('Host Rectangle:', event.hostRectangle);
+        console.groupEnd();
+
+    }
 
     ngOnDestroy() {
         this.sub.unsubscribe();
