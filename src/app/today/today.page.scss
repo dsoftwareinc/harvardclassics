@@ -4,3 +4,10 @@ article {
   -ms-user-select: text;
   user-select: auto !important;
 }
+
+ion-footer {
+  ion-icon {
+    zoom: 2.5;
+    //color: var(--pink-color);
+  }
+}

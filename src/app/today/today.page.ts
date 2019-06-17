@@ -4,9 +4,10 @@ import * as moment from 'moment';
 import {HttpClient} from '@angular/common/http';
 import {MaterialService} from '../services/material.service';
 import {AnalyticsProvider} from '../services/analytics.service';
-import {Events} from '@ionic/angular';
+import {ActionSheetController, Events} from '@ionic/angular';
 import {EVENT_FINISHED_READING} from '../constants';
 import {TextSelectEventDirective} from './text-select-event.directive';
+import {ReadingDbService} from '../services/readingdb.service';
 
 
 @Component({
@@ -21,6 +22,7 @@ export class TodayPage implements OnInit {
     title: string;
     header: string;
     html: string;
+    isFavorite: boolean = false;
     private sub: any;
     progress = 0;
     private clientHeight = 0;
@@ -30,7 +32,9 @@ export class TodayPage implements OnInit {
                 private http: HttpClient,
                 private material: MaterialService,
                 private events: Events,
-                private analytics: AnalyticsProvider) {
+                private analytics: AnalyticsProvider,
+                private actionSheetController: ActionSheetController,
+                private db: ReadingDbService,) {
     }
 
     ngOnInit() {
@@ -71,20 +75,40 @@ export class TodayPage implements OnInit {
             this.html = dayData['content'];
             this.content.scrollToTop();
         });
-        // this.http.get(`assets/${month}/${this.day}.html`, {responseType: 'text'})
-        //     .toPromise().then((html: string) => {
-        //     this.html = html;
-        // });
+        if (this.db.ready) {
+            this.db.userDocValue().subscribe((val) => {
+                this.isFavorite = (val.favorites !== undefined && val.favorites.indexOf(this.day) !== -1);
+            });
+        }
     }
 
-    public renderRectangles(event: TextSelectEventDirective): void {
-
+    public async renderRectangles(event: TextSelectEventDirective) {
+        if (event.text === '') {
+            return;
+        }
         console.group('Text Select Event');
         console.log('Text:', event.text);
         console.log('Viewport Rectangle:', event.viewportRectangle);
         console.log('Host Rectangle:', event.hostRectangle);
         console.groupEnd();
-
+        const actionSheet = await this.actionSheetController.create({
+            header: 'Highlighted text',
+            buttons: [{
+                text: 'Note text',
+                icon: 'bookmarks',
+                handler: () => {
+                    this.db.highlightText(this.day, event.text);
+                }
+            }, {
+                text: 'Cancel',
+                icon: 'close',
+                role: 'cancel',
+                handler: () => {
+                    console.log('Cancel clicked');
+                }
+            }]
+        });
+        await actionSheet.present();
     }
 
     ngOnDestroy() {
@@ -96,4 +120,10 @@ export class TodayPage implements OnInit {
         this.day = date.format('MM-DD');
         this.refreshView();
     }
+
+    toggleFavorite() {
+        this.db.toggleFavorite(this.day);
+        this.isFavorite = !this.isFavorite;
+    }
+
 }

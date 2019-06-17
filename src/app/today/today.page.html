@@ -4,6 +4,13 @@
             <ion-menu-button></ion-menu-button>
         </ion-buttons>
         <ion-title>{{title}}</ion-title>
+        <ion-buttons slot="end">
+            <ion-button fill="clear"
+                        [color]="isFavorite? 'warning': ''"
+                        (click)="toggleFavorite()">
+                <ion-icon slot="icon-only" name="star"></ion-icon>
+            </ion-button>
+        </ion-buttons>
     </ion-toolbar>
     <ion-progress-bar [value]="progress" color="primary"></ion-progress-bar>
 </ion-header>
@@ -26,6 +33,7 @@
         <ion-buttons slot="start">
             <ion-icon name="arrow-back" (click)="calcDay(-1)"></ion-icon>
         </ion-buttons>
+
         <ion-buttons slot="end">
             <ion-icon name="arrow-forward" (click)="calcDay(+1)"></ion-icon>
         </ion-buttons>
