@@ -53,14 +53,11 @@ export class MonthPage implements OnInit {
             }
             this.monthName = MONTHS[Number(this.month) - 1];
         });
-        if (this.readDb.ready) {
-            this.readDb.userDocValue().subscribe(data => {
-                const year = moment().year();
-                this.dateMulti = [];
-                data.days.forEach(x => this.dateMulti.push(year + '-' + x));
-                console.log(this.dateMulti);
-            });
-        }
+        this.readDb.userDocValue().subscribe(data => {
+            const year = moment().year();
+            this.dateMulti = [];
+            data.days.forEach(x => this.dateMulti.push(year + '-' + x));
+        });
         this.material.ready().then(json => {
             this.data = json[this.month];
         });

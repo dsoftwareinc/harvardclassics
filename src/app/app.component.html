@@ -3,6 +3,10 @@
         <ion-content>
             <ion-list>
                 <ion-menu-toggle auto-hide="true">
+                    <ion-item routerLink="/today">
+                        <ion-icon slot="start" name="home"></ion-icon>
+                        Today
+                    </ion-item>
                     <ion-item
                             *ngFor="let p of appPages"
                             [routerDirection]="'root'"
@@ -16,6 +20,10 @@
                     <ion-item [routerDirection]="'root'"
                               routerLink="/login">
                         Login
+                    </ion-item>
+                    <ion-item [routerDirection]="'root'"
+                              routerLink="/notes">
+                        Saved notes
                     </ion-item>
                     <!--
                     <ion-item (click)="login('google')">

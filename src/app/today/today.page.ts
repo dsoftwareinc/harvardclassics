@@ -76,15 +76,13 @@ export class TodayPage implements OnInit {
             this.html = dayData['content'];
             this.content.scrollToTop();
         });
-        if (this.db.ready) {
-            this.db.userDocValue().subscribe((val) => {
-                this.isFavorite = (val.favorites !== undefined && val.favorites.indexOf(this.day) !== -1);
-                this.notes = val.notes
-                    .filter(note => note.day === this.day)
-                    .map(note => note.text);
-                this.html = this.highlightedHtml(this.html, this.notes);
-            });
-        }
+        this.db.userDocValue().subscribe((val) => {
+            this.isFavorite = (val.favorites !== undefined && val.favorites.indexOf(this.day) !== -1);
+            this.notes = val.notes
+                .filter(note => note.day === this.day)
+                .map(note => note.text);
+            this.html = this.highlightedHtml(this.html, this.notes);
+        });
     }
 
     public async textSelected(event: TextSelectEventDirective) {

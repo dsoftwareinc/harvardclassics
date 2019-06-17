@@ -16,13 +16,7 @@ export const MONTHS = ['January',
     templateUrl: 'app.component.html'
 })
 export class AppComponent {
-    public appPages = [
-        {
-            title: 'Today',
-            url: '/today',
-            icon: 'home'
-        },
-    ];
+    public appPages = [];
 
     constructor(private platform: Platform,
                 private splashScreen: SplashScreen,

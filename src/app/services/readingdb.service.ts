@@ -4,6 +4,8 @@ import {EVENT_FINISHED_READING} from '../constants';
 import {AngularFirestore, AngularFirestoreDocument} from '@angular/fire/firestore';
 import {AngularFireAuth} from '@angular/fire/auth';
 
+import {EMPTY} from 'rxjs';
+
 export interface Note {
     day: string;
     text: string;
@@ -45,7 +47,6 @@ export class ReadingDbService {
     public highlightText(day: string, text: string): void {
         if (this.email === null) {
             console.log('User not logged in, not saving days read');
-            return;
         }
         this.userDoc.get().subscribe((val) => {
             if (val.exists) {
@@ -83,14 +84,14 @@ export class ReadingDbService {
     userDocValue() {
         if (this.email === null) {
             console.log('User not logged in, not returning days read');
-            return;
+            return EMPTY;
         }
         return this.userDoc.valueChanges();
     }
 
-    get ready() {
-        return this.userDoc !== null;
-    }
+    // get ready() {
+    //     return this.userDoc !== null;
+    // }
 
     toggleFavorite(day: string) {
         if (this.email === null) {

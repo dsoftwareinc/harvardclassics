@@ -1,0 +1,21 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>User saved notes</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-card *ngFor="let item of notes">
+        <ion-card-header>
+            <ion-card-title>
+                {{item.title}}
+            </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+            {{item.text}}
+        </ion-card-content>
+    </ion-card>
+</ion-content>
