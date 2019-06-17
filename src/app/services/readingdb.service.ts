@@ -4,10 +4,15 @@ import {EVENT_FINISHED_READING} from '../constants';
 import {AngularFirestore, AngularFirestoreDocument} from '@angular/fire/firestore';
 import {AngularFireAuth} from '@angular/fire/auth';
 
+export interface Note {
+    day: string;
+    text: string;
+}
+
 export interface Item {
     days: string[];
     favorites: string[];
-    notes: any[];
+    notes: Note[];
 }
 
 @Injectable({
@@ -45,9 +50,6 @@ export class ReadingDbService {
         this.userDoc.get().subscribe((val) => {
             if (val.exists) {
                 const data = val.data();
-                if (data.notes === undefined) {
-                    data.notes = [];
-                }
                 data.notes.push({day: day, text: text});
                 this.userDoc.update(data).then();
             } else {
@@ -98,9 +100,6 @@ export class ReadingDbService {
         this.userDoc.get().subscribe((val) => {
             if (val.exists) {
                 const data = val.data();
-                if (data.favorites === undefined) {
-                    data.favorites = [];
-                }
                 const dayIndex = data.favorites.indexOf(day);
                 if (dayIndex === -1) {
                     data.favorites.push(day);

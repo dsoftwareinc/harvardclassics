@@ -30,17 +30,11 @@ export class TextSelectDirective implements OnInit, OnDestroy {
     private zone: NgZone;
 
     // I initialize the text-select directive.
-    constructor(
-        elementRef: ElementRef,
-        zone: NgZone
-    ) {
-
+    constructor(elementRef: ElementRef, zone: NgZone) {
         this.elementRef = elementRef;
         this.zone = zone;
-
         this.hasSelection = false;
         this.textSelectEvent = new EventEmitter();
-
     }
 
     // ---

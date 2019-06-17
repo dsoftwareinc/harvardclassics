@@ -6,7 +6,7 @@
         <ion-title>{{title}}</ion-title>
         <ion-buttons slot="end">
             <ion-button fill="clear"
-                        [color]="isFavorite? 'warning': ''"
+                        [color]="isFavorite? 'warning': 'dark'"
                         (click)="toggleFavorite()">
                 <ion-icon slot="icon-only" name="star"></ion-icon>
             </ion-button>
@@ -22,9 +22,8 @@
         {{header}}
     </h4>
     <div #articleContent
-         (textSelect)="renderRectangles($event)"
+         (textSelect)="textSelected($event)"
          [innerHTML]="html">
-
     </div>
 </ion-content>
 

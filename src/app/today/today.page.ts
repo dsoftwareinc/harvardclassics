@@ -27,6 +27,7 @@ export class TodayPage implements OnInit {
     progress = 0;
     private clientHeight = 0;
     private markAsRead: boolean = false;
+    notes: string[] = [];
 
     constructor(private route: ActivatedRoute,
                 private http: HttpClient,
@@ -78,19 +79,18 @@ export class TodayPage implements OnInit {
         if (this.db.ready) {
             this.db.userDocValue().subscribe((val) => {
                 this.isFavorite = (val.favorites !== undefined && val.favorites.indexOf(this.day) !== -1);
+                this.notes = val.notes
+                    .filter(note => note.day === this.day)
+                    .map(note => note.text);
+                this.html = this.highlightedHtml(this.html, this.notes);
             });
         }
     }
 
-    public async renderRectangles(event: TextSelectEventDirective) {
-        if (event.text === '') {
+    public async textSelected(event: TextSelectEventDirective) {
+        if (event.text.trim() === '') {
             return;
         }
-        console.group('Text Select Event');
-        console.log('Text:', event.text);
-        console.log('Viewport Rectangle:', event.viewportRectangle);
-        console.log('Host Rectangle:', event.hostRectangle);
-        console.groupEnd();
         const actionSheet = await this.actionSheetController.create({
             header: 'Highlighted text',
             buttons: [{
@@ -124,6 +124,30 @@ export class TodayPage implements OnInit {
     toggleFavorite() {
         this.db.toggleFavorite(this.day);
         this.isFavorite = !this.isFavorite;
+    }
+
+    unmark(event) {
+        console.log(event);
+    }
+
+    highlightedHtml(text: string, searchStrs: string[]): string {
+        if (!text || !searchStrs || searchStrs.length === 0) {
+            return text;
+        }
+        try {
+            text = text.replace(/(\r\n|\n|\r)/gm, ' ');
+            searchStrs.forEach(query => {
+                const startIndex = text.toLowerCase().indexOf(query.toLowerCase());
+                if (startIndex !== -1) {
+                    const matchingString = text.substr(startIndex, query.length);
+                    text = text.replace(matchingString,
+                        `<span (click)="unmark($event)" class="highlight">${matchingString}</span>`);
+                }
+            });
+        } catch (exception) {
+            console.error('error in highlight:', exception);
+        }
+        return text;
     }
 
 }
