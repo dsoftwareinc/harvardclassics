@@ -8,14 +8,24 @@
 </ion-header>
 
 <ion-content>
-    <ion-card *ngFor="let item of notes">
+    <ion-card *ngFor="let item of notes| keyvalue">
         <ion-card-header>
             <ion-card-title>
-                {{item.title}}
+                {{item.key | date: 'MMMM dd'}}
             </ion-card-title>
+
         </ion-card-header>
         <ion-card-content>
-            {{item.text}}
+            <ion-item-sliding *ngFor="let note of item.value">
+                <ion-item>
+                    {{note.text}}}
+                </ion-item>
+                <ion-item-options>
+                    <ion-item-option (click)="deleteNote(note)" color="danger">
+                        <ion-icon slot="icon-only" name="trash"></ion-icon>
+                    </ion-item-option>
+                </ion-item-options>
+            </ion-item-sliding>
         </ion-card-content>
     </ion-card>
 </ion-content>

@@ -47,6 +47,7 @@ export class ReadingDbService {
     public highlightText(day: string, text: string): void {
         if (this.email === null) {
             console.log('User not logged in, not saving days read');
+            return;
         }
         this.userDoc.get().subscribe((val) => {
             if (val.exists) {
@@ -59,6 +60,38 @@ export class ReadingDbService {
                 this.userDoc.set(data).then();
             }
         });
+    }
+
+    public removeHighlightedText(day: string, text: string): void {
+        if (this.email === null) {
+            console.log('User not logged in, not saving days read');
+            return;
+        }
+        this.userDoc.get().subscribe((val) => {
+            if (val.exists) {
+                const data = val.data();
+
+                const idx = this.searchNoteInNotes(data.notes, day, text);
+                if (idx !== -1) {
+                    data.notes.splice(idx, 1);
+                    this.userDoc.update(data).then();
+                }
+            } else {
+                const data = this.INITIAL_DATA;
+                data.notes.push({day: day, text: text});
+                this.userDoc.set(data).then();
+            }
+        });
+    }
+
+    private searchNoteInNotes(notes: Note[], day: string, text: string): number {
+        for (let i = 0; i < notes.length; i++) {
+            const item = notes[i];
+            if (item.day === day && item.text === text) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     private markDayAsRead(day: string): void {

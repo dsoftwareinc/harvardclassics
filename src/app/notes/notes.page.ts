@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ReadingDbService} from '../services/readingdb.service';
 import {MaterialService} from '../services/material.service';
-import {MONTHS} from '../app.component';
 
 @Component({
     selector: 'app-notes',
@@ -10,7 +9,7 @@ import {MONTHS} from '../app.component';
 })
 export class NotesPage implements OnInit {
     data: any;
-    notes = [];
+    notes = {};
 
     constructor(private db: ReadingDbService,
                 private material: MaterialService) {
@@ -26,13 +25,19 @@ export class NotesPage implements OnInit {
             userNotes.forEach(note => {
                 const month = note.day.substr(0, 2);
                 const day = note.day.substr(3, 2);
-                this.notes.push({
-                    title: `${MONTHS[Number(month) - 1]} ${day}`,
+                const key = '2016-' + note.day;
+                this.notes[key] = this.notes[key] || [];
+                this.notes[key].push({
+                    title: +note.day,
+                    day: note.day,
                     text: note.text,
                 });
             });
-            console.log(`Added ${this.notes.length} notes`);
+            console.log(`Added ${userNotes.length} notes`);
         });
     }
 
+    deleteNote(item: any) {
+        this.db.removeHighlightedText(item.day, item.text);
+    }
 }
