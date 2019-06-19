@@ -1,5 +1,7 @@
 harvardclassics app
 ===================
+App is deployed on http://harvardclassics365.firebaseapp.com
+
 
 # Create environment
 * Make sure you have nodejs and npm installed, check that using `npm -v`
