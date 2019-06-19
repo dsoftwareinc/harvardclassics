@@ -2,7 +2,7 @@
   "name": "harvardclassics",
   "version": "1.0.0",
   "author": "Daniel & Natalia Moran",
-  "homepage": "",
+  "homepage": "http://harvardclassics365.firebaseapp.com",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

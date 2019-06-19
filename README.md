@@ -1,33 +1,17 @@
-# Harvard Classics progressive webapp
+<h1 align="center">Welcome to Harvard Classics 👋</h1>
+<p>
+  <img src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
+  <a href="https://github.com/cunla/harvardclassics2/blob/master/LICENSE">
+    <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" target="_blank" />
+  </a>
+</p>
 
-## Introduction
+> A progressive webapp that allows you to read Harvard Classics
 
-A progressive webapp that allows you to read HarvardClassics, mark notes and track progress. The app is deployed here: http://harvardclassics365.firebaseapp.com
+### 🏠 [Homepage](http://harvardclassics365.firebaseapp.com)
 
-The Harvard Universal Classics, originally known as Dr. Eliot's Five Foot Shelf, is a 51-volume anthology of classic works from world literature, compiled and edited by Harvard University president Charles W. Eliot and first published in 1909.
+## Install
 
-Eliot had stated in speeches that the elements of a liberal education could be obtained by spending 15 minutes a day reading from a collection of books that could fit on a five-foot shelf. (Originally he had said a three-foot shelf.) The publisher P. F. Collier and Son saw an opportunity and challenged Eliot to make good on this statement by selecting an appropriate collection of works, and the Harvard Classics was the result.
-
-## Code Samples
-
-The app starts `AppComponent`, which contains also the menu with links to other pages
-
-### TodayPage
-An view that contains a daily reading.
-
-If the day parameter is not given to the view, it calculates today's date.
-
-### MonthPage
-Contains cards with links to daily readings.
-
-### AnalyticsProvider
-Google Analytics provider for app
-
-### MaterialService
-Service to fetch data about daily readings
-
-
-## Installation
 
 * Make sure you have nodejs and npm installed, check that using `npm -v`
 * Install ionic 4 if you haven't already, run `sudo npm -g i ionic`, it will ask you for your user password
@@ -54,3 +38,32 @@ export const environment = {
     },
 };
 ```
+
+
+## Usage
+
+```sh
+npm run start
+```
+
+## Author
+
+👤 **Daniel &amp; Natalia Moran**
+
+* Github: [@cunla](https://github.com/cunla)
+
+## 🤝 Contributing
+
+Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/cunla/harvardclassics2/issues).
+
+## Show your support
+
+Give a ⭐️ if this project helped you!
+
+## 📝 License
+
+Copyright © 2019 [Daniel &amp; Natalia Moran](https://github.com/cunla).<br />
+This project is [MIT](https://github.com/cunla/harvardclassics2/blob/master/LICENSE) licensed.
+
+***
+_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
