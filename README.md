@@ -7,6 +7,12 @@
 </p>
 
 > A progressive webapp that allows you to read Harvard Classics
+<p align="center">
+  <img src="screenshots/menu.png" width="200" title="Menu page">
+  
+  <img src="screenshots/today.png" width="200" title="Today reading">
+  <img src="screenshots/month.png" width="200" alt="Monthly summary">
+</p>
 
 ### 🏠 [Homepage](http://harvardclassics365.firebaseapp.com)
 
