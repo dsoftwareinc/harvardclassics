@@ -4,10 +4,11 @@ import * as moment from 'moment';
 import {HttpClient} from '@angular/common/http';
 import {MaterialService} from '../services/material.service';
 import {AnalyticsProvider} from '../services/analytics.service';
-import {ActionSheetController, Events} from '@ionic/angular';
+import {ActionSheetController} from '@ionic/angular';
 import {EVENT_FINISHED_READING} from '../constants';
 import {TextSelectEventDirective} from './text-select-event.directive';
 import {ReadingDbService} from '../services/readingdb.service';
+import {Events} from "../services/events.service";
 
 
 @Component({

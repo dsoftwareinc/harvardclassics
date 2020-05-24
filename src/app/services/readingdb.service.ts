@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
-import {Events} from '@ionic/angular';
 import {EVENT_FINISHED_READING} from '../constants';
 import {AngularFirestore, AngularFirestoreDocument} from '@angular/fire/firestore';
 import {AngularFireAuth} from '@angular/fire/auth';
 
 import {EMPTY} from 'rxjs';
+import {Events} from "./events.service";
 
 export interface Note {
     day: string;

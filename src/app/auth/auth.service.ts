@@ -1,8 +1,8 @@
 import {AngularFireAuth} from '@angular/fire/auth';
 import {auth, User} from 'firebase';
 import {Injectable} from '@angular/core';
-import {Events} from '@ionic/angular';
 import {EVENT_USER_LOGIN} from '../constants';
+import {Events} from "../services/events.service";
 
 @Injectable({
     providedIn: 'root'
@@ -25,7 +25,7 @@ export class AuthService {
 
     async emailSignup(email: string, password: string) {
         try {
-            await this.afAuth.auth.createUserWithEmailAndPassword(email, password);
+            await this.afAuth.createUserWithEmailAndPassword(email, password);
         } catch (e) {
             alert('Error!' + e.message);
         }
@@ -33,7 +33,7 @@ export class AuthService {
 
     async emailLogin(email: string, password: string) {
         try {
-            await this.afAuth.auth.signInWithEmailAndPassword(email, password);
+            await this.afAuth.signInWithEmailAndPassword(email, password);
         } catch (e) {
             alert('Error!' + e.message);
         }
@@ -41,16 +41,16 @@ export class AuthService {
 
     facebookLogin() {
         const authProvider = new auth.FacebookAuthProvider();
-        this.afAuth.auth.signInWithPopup(authProvider).then();
+        this.afAuth.signInWithPopup(authProvider).then();
     }
 
     googleLogin() {
         const authProvider = new auth.GoogleAuthProvider();
-        this.afAuth.auth.signInWithPopup(authProvider).then();
+        this.afAuth.signInWithPopup(authProvider).then();
     }
 
     async logout() {
-        await this.afAuth.auth.signOut();
+        await this.afAuth.signOut();
         localStorage.removeItem('user');
     }
 
