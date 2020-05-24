@@ -15,10 +15,11 @@
     <ion-progress-bar [value]="progress" color="primary"></ion-progress-bar>
 </ion-header>
 
-<ion-content padding #content
+<ion-content class="ion-padding"
+             #content
              scrollEvents="true"
              (ionScroll)="onPageScroll($event)">
-    <h4 text-center>
+    <h4 class="ion-text-center">
         {{header}}
     </h4>
     <div #articleContent

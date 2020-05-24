@@ -2,12 +2,13 @@
 // http://ionicframework.com/docs/theming/
 
 ///** Ionic CSS Variables **/
-//@font-face {
-//  font-family: 'Kievit';
-//  font-style: normal;
-//  font-weight: 400;
-//  src: url('../assets/fonts/FF-Kievit-Pro-Medium.otf') format('otf');
-//}
+@font-face {
+  font-family: 'Kievit';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../assets/fonts/FF-Kievit-Pro-Medium.otf') format('otf');
+}
+
 
 :root {
   /** primary **/
@@ -117,5 +118,6 @@
 
   * ::-webkit-scrollbar {
     display: none;
+    font-family: 'Kievit' !important;
   }
 }
