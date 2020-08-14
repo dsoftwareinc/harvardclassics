@@ -15,8 +15,6 @@ import {AuthService} from '../auth/auth.service';
 export class MonthPage implements OnInit {
     @ViewChild('calendar', {read: CalendarComponent, static: true}) calendarRef: CalendarComponent;
     @ViewChild('content', {static: true}) content;
-    private sub: any;
-    private month: string;
     monthName: string;
     data: Array<any> = null;
     dateMulti: string[] = [];
@@ -27,7 +25,8 @@ export class MonthPage implements OnInit {
         showMonthPicker: false,
         showToggleButtons: false,
     };
-
+    private sub: any;
+    private month: string;
 
     constructor(private auth: AuthService,
                 private router: Router,

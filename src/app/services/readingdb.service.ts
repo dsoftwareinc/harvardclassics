@@ -84,36 +84,6 @@ export class ReadingDbService {
         });
     }
 
-    private searchNoteInNotes(notes: Note[], day: string, text: string): number {
-        for (let i = 0; i < notes.length; i++) {
-            const item = notes[i];
-            if (item.day === day && item.text === text) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    private markDayAsRead(day: string): void {
-        if (this.email === null) {
-            console.log('User not logged in, not saving days read');
-            return;
-        }
-        this.userDoc.get().subscribe((val) => {
-            if (val.exists) {
-                const data = val.data();
-                if (data.days.indexOf(day) === -1) {
-                    data.days.push(day);
-                    this.userDoc.update(data).then();
-                }
-            } else {
-                const data = this.INITIAL_DATA;
-                data.days.push(day);
-                this.userDoc.set(data).then();
-            }
-        });
-    }
-
     userDocValue() {
         if (this.email === null) {
             console.log('User not logged in, not returning days read');
@@ -121,10 +91,6 @@ export class ReadingDbService {
         }
         return this.userDoc.valueChanges();
     }
-
-    // get ready() {
-    //     return this.userDoc !== null;
-    // }
 
     toggleFavorite(day: string) {
         if (this.email === null) {
@@ -144,6 +110,40 @@ export class ReadingDbService {
             } else {
                 const data = this.INITIAL_DATA;
                 data.favorites.push(day);
+                this.userDoc.set(data).then();
+            }
+        });
+    }
+
+    private searchNoteInNotes(notes: Note[], day: string, text: string): number {
+        for (let i = 0; i < notes.length; i++) {
+            const item = notes[i];
+            if (item.day === day && item.text === text) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    // get ready() {
+    //     return this.userDoc !== null;
+    // }
+
+    private markDayAsRead(day: string): void {
+        if (this.email === null) {
+            console.log('User not logged in, not saving days read');
+            return;
+        }
+        this.userDoc.get().subscribe((val) => {
+            if (val.exists) {
+                const data = val.data();
+                if (data.days.indexOf(day) === -1) {
+                    data.days.push(day);
+                    this.userDoc.update(data).then();
+                }
+            } else {
+                const data = this.INITIAL_DATA;
+                data.days.push(day);
                 this.userDoc.set(data).then();
             }
         });

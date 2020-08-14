@@ -24,11 +24,11 @@ export class TodayPage implements OnInit {
     header: string;
     html: string;
     isFavorite: boolean = false;
-    private sub: any;
     progress = 0;
+    notes: string[] = [];
+    private sub: any;
     private clientHeight = 0;
     private markAsRead: boolean = false;
-    notes: string[] = [];
 
     constructor(private route: ActivatedRoute,
                 private http: HttpClient,
@@ -61,29 +61,6 @@ export class TodayPage implements OnInit {
             this.markAsRead = true;
             this.events.publish(EVENT_FINISHED_READING, this.day);
         }
-    }
-
-    private refreshView() {
-        this.analytics.trackView(`day-${this.day}`);
-        this.title = moment('2016-' + this.day).format('MMMM DD');
-        const splited = this.day.split('-');
-        const month: string = splited[0];
-        console.log(`Loading assets/${month}/${this.day}`);
-        this.material.ready().then(json => {
-            const dayData = json[month].find(item => {
-                return item.day === splited[1];
-            });
-            this.header = dayData['title'];
-            this.html = dayData['content'];
-            this.content.scrollToTop();
-        });
-        this.db.userDocValue().subscribe((val) => {
-            this.isFavorite = (val.favorites !== undefined && val.favorites.indexOf(this.day) !== -1);
-            this.notes = val.notes
-                .filter(note => note.day === this.day)
-                .map(note => note.text);
-            this.html = this.highlightedHtml(this.html, this.notes);
-        });
     }
 
     public async textSelected(event: TextSelectEventDirective) {
@@ -147,6 +124,29 @@ export class TodayPage implements OnInit {
             console.error('error in highlight:', exception);
         }
         return text;
+    }
+
+    private refreshView() {
+        this.analytics.trackView(`day-${this.day}`);
+        this.title = moment('2016-' + this.day).format('MMMM DD');
+        const splited = this.day.split('-');
+        const month: string = splited[0];
+        console.log(`Loading assets/${month}/${this.day}`);
+        this.material.ready().then(json => {
+            const dayData = json[month].find(item => {
+                return item.day === splited[1];
+            });
+            this.header = dayData['title'];
+            this.html = dayData['content'];
+            this.content.scrollToTop();
+        });
+        this.db.userDocValue().subscribe((val) => {
+            this.isFavorite = (val.favorites !== undefined && val.favorites.indexOf(this.day) !== -1);
+            this.notes = val.notes
+                .filter(note => note.day === this.day)
+                .map(note => note.text);
+            this.html = this.highlightedHtml(this.html, this.notes);
+        });
     }
 
 }

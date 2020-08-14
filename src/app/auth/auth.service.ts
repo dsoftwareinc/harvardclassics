@@ -23,6 +23,11 @@ export class AuthService {
         });
     }
 
+    get isLoggedIn(): boolean {
+        const user = JSON.parse(localStorage.getItem('user'));
+        return user !== null;
+    }
+
     async emailSignup(email: string, password: string) {
         try {
             await this.afAuth.createUserWithEmailAndPassword(email, password);
@@ -52,10 +57,5 @@ export class AuthService {
     async logout() {
         await this.afAuth.signOut();
         localStorage.removeItem('user');
-    }
-
-    get isLoggedIn(): boolean {
-        const user = JSON.parse(localStorage.getItem('user'));
-        return user !== null;
     }
 }

@@ -1,10 +1,10 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
-import {Routes, RouterModule} from '@angular/router';
+import {RouterModule, Routes} from '@angular/router';
 
 import {IonicModule} from '@ionic/angular';
-import { CalendarModule } from 'ion2-calendar';
+import {CalendarModule} from 'ion2-calendar';
 import {MonthPage} from './month.page';
 
 const routes: Routes = [

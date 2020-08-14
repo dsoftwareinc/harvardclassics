@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 export type EventHandler = (...args: any[]) => any;
+
 @Injectable({
     providedIn: 'root',
 })
@@ -12,6 +13,7 @@ export class Events {
         // - Use "Observables" for a similar pub/sub architecture: https://angular.io/guide/observables
         // - Use "Redux" for advanced state management: https://ngrx.io`);
     }
+
     /**
      * Subscribe to an event topic. Events that get posted to that topic will trigger the provided handler.
      *
