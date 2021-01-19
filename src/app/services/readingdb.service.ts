@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {EVENT_FINISHED_READING} from '../constants';
 import {AngularFirestore, AngularFirestoreDocument} from '@angular/fire/firestore';
-import {AngularFireAuth} from '@angular/fire/auth';
 
 import {EMPTY} from 'rxjs';
 import {Events} from "./events.service";
+import {AuthService} from "../auth/auth.service";
 
 export interface Note {
     day: string;
@@ -21,7 +21,6 @@ export interface Item {
     providedIn: 'root'
 })
 export class ReadingDbService {
-    private email: string = null;
     private userDoc: AngularFirestoreDocument<Item> = null;
     private INITIAL_DATA = {
         days: [],
@@ -29,23 +28,18 @@ export class ReadingDbService {
         notes: []
     };
 
-    constructor(private afAuth: AngularFireAuth,
+    constructor(private auth: AuthService,
                 private events: Events,
                 private afs: AngularFirestore) {
         console.log('User authenticating');
-        this.afAuth.authState.subscribe(user => {
-            if (user) {
-                this.email = user.email;
-                this.userDoc = afs.doc<Item>(`users/${this.email}`);
-            }
-        });
+        this.userDoc = afs.doc<Item>(`users/${this.auth.userEmail}`);
         events.subscribe(EVENT_FINISHED_READING, day => {
             this.markDayAsRead(day);
         });
     }
 
     public highlightText(day: string, text: string): void {
-        if (this.email === null) {
+        if (this.auth.userEmail === null) {
             console.log('User not logged in, not saving days read');
             return;
         }
@@ -63,7 +57,7 @@ export class ReadingDbService {
     }
 
     public removeHighlightedText(day: string, text: string): void {
-        if (this.email === null) {
+        if (this.auth.userEmail === null) {
             console.log('User not logged in, not saving days read');
             return;
         }
@@ -85,15 +79,15 @@ export class ReadingDbService {
     }
 
     userDocValue() {
-        if (this.email === null) {
+        if (this.auth.userEmail === null) {
             console.log('User not logged in, not returning days read');
             return EMPTY;
         }
-        return this.userDoc.valueChanges();
+        return this.userDoc?.valueChanges();
     }
 
     toggleFavorite(day: string) {
-        if (this.email === null) {
+        if (this.auth.userEmail === null) {
             console.log('User not logged in, not saving days read');
             return;
         }
@@ -130,7 +124,7 @@ export class ReadingDbService {
     // }
 
     private markDayAsRead(day: string): void {
-        if (this.email === null) {
+        if (this.auth.userEmail === null) {
             console.log('User not logged in, not saving days read');
             return;
         }

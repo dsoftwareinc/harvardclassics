@@ -19,6 +19,7 @@ export class NotesPage implements OnInit {
         this.material.ready().then(json => {
             this.data = json;
         });
+        console.log(`Adding notes`);
         this.db.userDocValue().subscribe(data => {
             const userNotes = data.notes;
             this.notes = [];

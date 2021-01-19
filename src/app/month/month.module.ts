@@ -19,10 +19,12 @@ const routes: Routes = [
         CommonModule,
         FormsModule,
         IonicModule,
-        CalendarModule,
+        CalendarModule.forRoot(),
         RouterModule.forChild(routes),
     ],
-    declarations: [MonthPage]
+    declarations: [
+        MonthPage,
+    ]
 })
 export class MonthPageModule {
 }

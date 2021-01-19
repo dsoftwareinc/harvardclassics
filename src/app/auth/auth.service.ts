@@ -1,5 +1,5 @@
 import {AngularFireAuth} from '@angular/fire/auth';
-import {auth, User} from 'firebase';
+import firebase from "firebase/app";
 import {Injectable} from '@angular/core';
 import {EVENT_USER_LOGIN} from '../constants';
 import {Events} from "../services/events.service";
@@ -8,7 +8,7 @@ import {Events} from "../services/events.service";
     providedIn: 'root'
 })
 export class AuthService {
-    public user: User;
+    user: firebase.User;
 
     constructor(private afAuth: AngularFireAuth,
                 private events: Events,) {
@@ -28,6 +28,11 @@ export class AuthService {
         return user !== null;
     }
 
+    get userEmail() {
+        const user = JSON.parse(localStorage.getItem('user'));
+        return user ? user.email : '';
+    }
+
     async emailSignup(email: string, password: string) {
         try {
             await this.afAuth.createUserWithEmailAndPassword(email, password);
@@ -45,12 +50,12 @@ export class AuthService {
     }
 
     facebookLogin() {
-        const authProvider = new auth.FacebookAuthProvider();
+        const authProvider = new firebase.auth.FacebookAuthProvider();
         this.afAuth.signInWithPopup(authProvider).then();
     }
 
     googleLogin() {
-        const authProvider = new auth.GoogleAuthProvider();
+        const authProvider = new firebase.auth.GoogleAuthProvider();
         this.afAuth.signInWithPopup(authProvider).then();
     }
 
