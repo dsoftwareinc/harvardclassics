@@ -26,7 +26,7 @@ export class MonthPage implements OnInit {
         showToggleButtons: false,
     };
     private sub: any;
-    private month: string;
+    month: string;
 
     constructor(private auth: AuthService,
                 private router: Router,
