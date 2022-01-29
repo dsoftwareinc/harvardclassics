@@ -6,6 +6,8 @@ import {RouterModule, Routes} from '@angular/router';
 import {IonicModule} from '@ionic/angular';
 
 import {SignupPage} from './signup.page';
+import {AngularFireModule} from "@angular/fire";
+import {environment} from "../../../environments/environment";
 
 const routes: Routes = [
     {
@@ -19,7 +21,8 @@ const routes: Routes = [
         CommonModule,
         FormsModule,
         IonicModule,
-        RouterModule.forChild(routes)
+        RouterModule.forChild(routes),
+        AngularFireModule.initializeApp(environment.firebase),
     ],
     declarations: [SignupPage]
 })

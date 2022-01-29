@@ -31,8 +31,10 @@ export class ReadingDbService {
     constructor(private auth: AuthService,
                 private events: Events,
                 private afs: AngularFirestore) {
-        console.log('User authenticating');
-        this.userDoc = afs.doc<Item>(`users/${this.auth.userEmail}`);
+        if (this.auth.userEmail) {
+            console.log(`User authenticating ${this.auth.userEmail}`);
+            this.userDoc = afs.doc<Item>(`/users/${this.auth.userEmail}`);
+        }
         events.subscribe(EVENT_FINISHED_READING, day => {
             this.markDayAsRead(day);
         });

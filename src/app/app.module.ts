@@ -3,8 +3,6 @@ import {BrowserModule} from '@angular/platform-browser';
 import {RouteReuseStrategy} from '@angular/router';
 
 import {IonicModule, IonicRouteStrategy} from '@ionic/angular';
-import {SplashScreen} from '@ionic-native/splash-screen/ngx';
-import {StatusBar} from '@ionic-native/status-bar/ngx';
 
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
@@ -15,7 +13,6 @@ import {AnalyticsProvider} from './services/analytics.service';
 import {AngularFireModule} from '@angular/fire';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {AngularFireAuthModule} from '@angular/fire/auth';
-import {Facebook} from '@ionic-native/facebook/ngx';
 import {ReadingDbService} from './services/readingdb.service';
 
 @NgModule({
@@ -33,10 +30,7 @@ import {ReadingDbService} from './services/readingdb.service';
         AngularFireAuthModule,
     ],
     providers: [
-        StatusBar,
-        SplashScreen,
         AnalyticsProvider,
-        Facebook,
         ReadingDbService,
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
     ],

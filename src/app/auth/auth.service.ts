@@ -30,7 +30,7 @@ export class AuthService {
 
     get userEmail() {
         const user = JSON.parse(localStorage.getItem('user'));
-        return user ? user.email : '';
+        return user ? user.email : null;
     }
 
     async emailSignup(email: string, password: string) {
