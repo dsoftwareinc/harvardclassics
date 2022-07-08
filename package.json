@@ -36,7 +36,7 @@
     "highcharts": "^9.1.0",
     "highcharts-angular": "^3.0.0",
     "ion2-calendar": "^3.5.0",
-    "moment": "^2.29.1",
+    "moment": "^2.29.4",
     "rxjs": "^6.6.7",
     "tslib": "^2.2.0",
     "zone.js": "~0.11.4"
