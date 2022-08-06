@@ -6,7 +6,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {IonicModule} from '@ionic/angular';
 
 import {NotesPage} from './notes.page';
-import {AngularFireModule} from "@angular/fire";
+import {AngularFireModule} from "@angular/fire/compat";
 import {environment} from "../../environments/environment";
 
 const routes: Routes = [
