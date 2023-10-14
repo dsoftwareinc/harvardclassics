@@ -18,7 +18,6 @@ import {ReadingDbService} from './services/readingdb.service';
 @NgModule({
     declarations: [AppComponent,
     ],
-    entryComponents: [],
     imports: [
         HttpClientModule,
         BrowserModule,
