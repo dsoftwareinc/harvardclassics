@@ -4,7 +4,7 @@ import {FormsModule} from '@angular/forms';
 import {RouterModule, Routes} from '@angular/router';
 
 import {IonicModule} from '@ionic/angular';
-import {CalendarModule} from 'ion2-calendar';
+import {CalendarModule} from 'ion7-calendar';
 import {MonthPage} from './month.page';
 import {AngularFireModule} from "@angular/fire/compat";
 import {environment} from "../../environments/environment";
@@ -21,7 +21,7 @@ const routes: Routes = [
         CommonModule,
         FormsModule,
         IonicModule,
-        CalendarModule.forRoot(),
+        CalendarModule,
         RouterModule.forChild(routes),
         AngularFireModule.initializeApp(environment.firebase),
     ],

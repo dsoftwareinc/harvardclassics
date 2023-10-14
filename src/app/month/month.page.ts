@@ -3,7 +3,7 @@ import * as moment from 'moment';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MaterialService} from '../services/material.service';
 import {MONTHS} from '../app.component';
-import {CalendarComponent, CalendarComponentOptions} from 'ion2-calendar';
+import {CalendarComponent, CalendarComponentOptions} from 'ion7-calendar';
 import {ReadingDbService} from '../services/readingdb.service';
 import {AuthService} from '../auth/auth.service';
 
