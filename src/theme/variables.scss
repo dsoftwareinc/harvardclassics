@@ -2,16 +2,16 @@
 // http://ionicframework.com/docs/theming/
 
 ///** Ionic CSS Variables **/
+
+
 @font-face {
-  font-family: 'Kievit';
-  font-style: normal;
-  font-weight: 400;
-  src: url('../assets/fonts/FF-Kievit-Pro-Medium.otf') format('otf');
+  font-family: "Helvetica", SansSerif;
 }
 
 
 :root {
   /** primary **/
+  --ion-font-family: "Helvetica", SansSerif;
   --ion-color-primary: #3880ff;
   --ion-color-primary-rgb: 56, 128, 255;
   --ion-color-primary-contrast: #ffffff;
@@ -82,9 +82,6 @@
   --ion-color-light-contrast-rgb: 0, 0, 0;
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
-
-  --ion-font-family: "Roboto", Serif;
-
   --pink-color: #ff1493;
 
   article {
@@ -118,6 +115,5 @@
 
   * ::-webkit-scrollbar {
     display: none;
-    font-family: 'Kievit' !important;
   }
 }
