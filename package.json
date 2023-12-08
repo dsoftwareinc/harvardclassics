@@ -15,15 +15,15 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "~16.2.9",
-    "@angular/common": "~16.2.9",
-    "@angular/core": "~16.2.9",
+    "@angular/animations": "~17.0.6",
+    "@angular/common": "~17.0.6",
+    "@angular/core": "~17.0.6",
     "@angular/fire": "^7.6.1",
-    "@angular/forms": "~16.2.9",
-    "@angular/platform-browser": "~16.2.9",
-    "@angular/platform-browser-dynamic": "~16.2.9",
-    "@angular/router": "~16.2.9",
-    "@angular/service-worker": "~16.2.9",
+    "@angular/forms": "~17.0.6",
+    "@angular/platform-browser": "~17.0.6",
+    "@angular/platform-browser-dynamic": "~17.0.6",
+    "@angular/router": "~17.0.6",
+    "@angular/service-worker": "~17.0.6",
     "@ionic-native/core": "^5.36.0",
     "@ionic/angular": "^7.6.0",
     "@ionic/core": "^7.6.0",
@@ -40,11 +40,11 @@
     "zone.js": "~0.13.3"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^16.2.6",
-    "@angular/cli": "~16.2.6",
-    "@angular/compiler": "~16.2.9",
-    "@angular/compiler-cli": "~16.2.9",
-    "@angular/language-service": "~16.2.9",
+    "@angular-devkit/build-angular": "^17.0.6",
+    "@angular/cli": "~17.0.6",
+    "@angular/compiler": "~17.0.6",
+    "@angular/compiler-cli": "~17.0.6",
+    "@angular/language-service": "~17.0.6",
     "@ionic/angular-toolkit": "^10.0.0",
     "@types/hammerjs": "^2.0.45",
     "@types/luxon": "^3.3.7",
@@ -60,6 +60,6 @@
     "eslint-plugin-react": "^7.33.2",
     "prettier": "^3.1.0",
     "ts-node": "~10.9.2",
-    "typescript": "5.1.6"
+    "typescript": "5.2.2"
   }
 }
