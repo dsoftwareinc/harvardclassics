@@ -3,7 +3,7 @@
         <ion-buttons slot="start">
             <ion-menu-button></ion-menu-button>
         </ion-buttons>
-        <ion-title>{{title}}</ion-title>
+        <ion-title>{{ title }}</ion-title>
         <ion-buttons slot="end">
             <ion-button (click)="toggleFavorite()"
                         [color]="isFavorite? 'warning': 'dark'"
@@ -17,11 +17,11 @@
 
 <ion-content #content
              (ionScroll)="onPageScroll($event)"
-             class="ion-padding"
+             class="ion-padding width-80 ion-text-justify"
              scrollEvents="true">
-    <h4 class="ion-text-center">
-        {{header}}
-    </h4>
+    <h2 class="ion-text-center ion-margin-bottom">
+        {{ header }}
+    </h2>
     <div #articleContent
          (textSelect)="textSelected($event)"
          [innerHTML]="html">
@@ -32,9 +32,11 @@
     <ion-toolbar>
         <ion-buttons slot="start">
             <ion-icon (click)="calcDay(-1)" name="arrow-back"></ion-icon>
+            {{ yesterday }}
         </ion-buttons>
 
         <ion-buttons slot="end">
+            {{ tomorrow }}
             <ion-icon (click)="calcDay(+1)" name="arrow-forward"></ion-icon>
         </ion-buttons>
     </ion-toolbar>

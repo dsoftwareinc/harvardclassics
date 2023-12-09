@@ -19,6 +19,8 @@ import {Events} from "../services/events.service";
 export class TodayPage implements OnInit {
     @ViewChild('content', {static: true}) content;
     @ViewChild('articleContent', {static: true}) articleContent;
+    yesterday: string;
+    tomorrow: string;
     day: string;
     title: string;
     header: string;
@@ -128,7 +130,10 @@ export class TodayPage implements OnInit {
 
     private refreshView() {
         this.analytics.trackView(`day-${this.day}`);
+        const today = moment('2016-' + this.day);
         this.title = moment('2016-' + this.day).format('MMMM DD');
+        this.yesterday = today.subtract(1, 'days').format('MMM DD');
+        this.tomorrow = today.add(2,'days').format('MMM DD');
         const splited = this.day.split('-');
         const month: string = splited[0];
         console.log(`Loading assets/${month}/${this.day}`);
