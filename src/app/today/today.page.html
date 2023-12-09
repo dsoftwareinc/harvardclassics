@@ -17,13 +17,14 @@
 
 <ion-content #content
              (ionScroll)="onPageScroll($event)"
-             class="ion-padding width-80 ion-text-justify"
+             class="ion-padding width-80"
              scrollEvents="true">
     <h2 class="ion-text-center ion-margin-bottom">
         {{ header }}
     </h2>
     <div #articleContent
          (textSelect)="textSelected($event)"
+         class="ion-text-justify"
          [innerHTML]="html">
     </div>
 </ion-content>
