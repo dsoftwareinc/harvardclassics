@@ -11,18 +11,3 @@ ion-footer {
     //color: var(--pink-color);
   }
 }
-
-@media (min-width: 450px) {
-  .width-80 {
-    align-self: center;
-    width: 80%;
-    max-width: 600px;
-  }
-}
-
-@media (max-width: 450px) {
-  .width-80 {
-    align-self: center;
-    width: 90%;
-  }
-}

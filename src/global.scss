@@ -9,3 +9,19 @@
 @import '~@ionic/angular/css/text-alignment.css';
 @import '~@ionic/angular/css/text-transformation.css';
 @import '~@ionic/angular/css/flex-utils.css';
+
+
+@media (min-width: 450px) {
+  .width-80 {
+    align-self: center;
+    width: 80%;
+    max-width: 600px;
+  }
+}
+
+@media (max-width: 450px) {
+  .width-80 {
+    align-self: center;
+    width: 90%;
+  }
+}

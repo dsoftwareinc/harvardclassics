@@ -24,8 +24,8 @@ export class NotesPage implements OnInit {
             const userNotes = data.notes;
             this.notes = [];
             userNotes.forEach(note => {
-                const month = note.day.substr(0, 2);
-                const day = note.day.substr(3, 2);
+                const month = note.day.substring(0, 2);
+                const day = note.day.substring(3, 2);
                 const key = '2016-' + note.day;
                 this.notes[key] = this.notes[key] || [];
                 this.notes[key].push({

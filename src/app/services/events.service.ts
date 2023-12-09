@@ -9,7 +9,7 @@ export class Events {
     private c = new Map<string, EventHandler[]>();
 
     constructor() {
-        //   console.warn(`[DEPRECATION][Events]: The Events provider is deprecated and it will be removed in the next major release.
+        //   console.warn(`[DEPRECATION][Events]: The Events provider is deprecated, and it will be removed in the next major release.
         // - Use "Observables" for a similar pub/sub architecture: https://angular.io/guide/observables
         // - Use "Redux" for advanced state management: https://ngrx.io`);
     }
@@ -18,7 +18,7 @@ export class Events {
      * Subscribe to an event topic. Events that get posted to that topic will trigger the provided handler.
      *
      * @param topic the topic to subscribe to
-     * @param handler the event handler
+     * @param handlers the event handler
      */
     subscribe(topic: any, ...handlers: EventHandler[]) {
         let topics = this.c.get(topic);
@@ -64,7 +64,7 @@ export class Events {
      * Publish an event to the given topic.
      *
      * @param topic the topic to publish to
-     * @param eventData the data to send as the event
+     * @param args the data to send as the event
      */
     publish(topic: string, ...args: any[]): any[] | null {
         const topics = this.c.get(topic);

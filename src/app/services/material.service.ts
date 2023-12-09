@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import {lastValueFrom} from "rxjs";
 
 @Injectable({
     providedIn: 'root'
@@ -9,16 +10,16 @@ export class MaterialService {
     data: any = null;
 
     constructor(private http: HttpClient) {
-        this.http.get('assets/index.json')
-            .toPromise().then(json => {
-            this.data = json;
-        });
+        lastValueFrom(this.http.get('assets/index.json'))
+            .then(json => {
+                this.data = json;
+            });
     }
 
     public ready(): Promise<any> {
-        const promise = new Promise((resolve, reject) => {
+        return new Promise((resolve, reject) => {
             if (this.data === null) {
-                this.http.get('assets/index.json').toPromise()
+                lastValueFrom(this.http.get('assets/index.json'))
                     .then(json => {
                         this.data = json;
                         resolve(this.data);
@@ -29,6 +30,5 @@ export class MaterialService {
                 resolve(this.data);
             }
         });
-        return promise;
     }
 }

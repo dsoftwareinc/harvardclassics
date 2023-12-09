@@ -15,7 +15,7 @@ export class AnalyticsProvider {
             clientId: localStorage.getItem('ga:clientId')
         });
         ga('set', 'appName', APPLICATION_NAME);
-        ga('set', 'checkProtocolTask', null);​
+        ga('set', 'checkProtocolTask', null);
         ga('set', 'transportUrl', 'https://www.google-analytics.com/collect');
         ga(function (tracker) {
             if (!localStorage.getItem('ga:clientId')) {
