@@ -1,10 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import * as moment from 'moment';
-import {HttpClient} from '@angular/common/http';
 import {MaterialService} from '../services/material.service';
 import {AnalyticsProvider} from '../services/analytics.service';
-import {ActionSheetController} from '@ionic/angular';
+import {ActionSheetController, ScrollCustomEvent} from '@ionic/angular';
 import {EVENT_FINISHED_READING} from '../constants';
 import {TextSelectEventDirective} from './text-select-event.directive';
 import {ReadingDbService} from '../services/readingdb.service';
@@ -33,7 +32,6 @@ export class TodayPage implements OnInit {
     private markAsRead: boolean = false;
 
     constructor(private route: ActivatedRoute,
-                private http: HttpClient,
                 private material: MaterialService,
                 private events: Events,
                 private analytics: AnalyticsProvider,
@@ -56,7 +54,7 @@ export class TodayPage implements OnInit {
         this.progress = this.clientHeight / this.articleContent.nativeElement.offsetHeight;
     }
 
-    onPageScroll(event) {
+    onPageScroll(event: ScrollCustomEvent) {
         this.progress = (event.detail.scrollTop + this.clientHeight) /
             this.articleContent.nativeElement.offsetHeight;
         if (this.progress >= 1 && !this.markAsRead) {
@@ -104,7 +102,7 @@ export class TodayPage implements OnInit {
         this.isFavorite = !this.isFavorite;
     }
 
-    unmark(event) {
+    unmark(event: Event) {
         console.log(event);
     }
 
@@ -117,7 +115,7 @@ export class TodayPage implements OnInit {
             searchStrs.forEach(query => {
                 const startIndex = text.toLowerCase().indexOf(query.toLowerCase());
                 if (startIndex !== -1) {
-                    const matchingString = text.substr(startIndex, query.length);
+                    const matchingString = text.substring(startIndex, query.length);
                     text = text.replace(matchingString,
                         `<span (click)="unmark($event)" class="highlight">${matchingString}</span>`);
                 }
@@ -133,13 +131,13 @@ export class TodayPage implements OnInit {
         const today = moment('2016-' + this.day);
         this.title = moment('2016-' + this.day).format('MMMM DD');
         this.yesterday = today.subtract(1, 'days').format('MMM DD');
-        this.tomorrow = today.add(2,'days').format('MMM DD');
-        const splited = this.day.split('-');
-        const month: string = splited[0];
+        this.tomorrow = today.add(2, 'days').format('MMM DD');
+        const split = this.day.split('-');
+        const month: string = split[0];
         console.log(`Loading assets/${month}/${this.day}`);
         this.material.ready().then(json => {
             const dayData = json[month].find(item => {
-                return item.day === splited[1];
+                return item.day === split[1];
             });
             this.header = dayData['title'];
             this.html = dayData['content'];
