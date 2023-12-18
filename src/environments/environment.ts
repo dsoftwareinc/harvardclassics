@@ -10,8 +10,8 @@ export const environment = {
         databaseURL: 'https://harvardclassics365.firebaseio.com',
         projectId: 'harvardclassics365',
         storageBucket: 'harvardclassics365.appspot.com',
-        messagingSenderId: '319043773098'
+        messagingSenderId: '319043773098',
+        appId: "1:319043773098:web:1374a99e677216cd",
+        measurementId:'G-YW61GDMMKQ',
     },
 };
-export const APPLICATION_NAME = 'HarvardClassics';
-export const GOOGLE_ANALYTICS_ID = 'UA-64041785-1';

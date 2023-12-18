@@ -9,11 +9,11 @@ import {AppRoutingModule} from './app-routing.module';
 import {HttpClientModule} from '@angular/common/http';
 import {ServiceWorkerModule} from '@angular/service-worker';
 import {environment} from '../environments/environment';
-import {AnalyticsProvider} from './services/analytics.service';
 import {AngularFireModule} from '@angular/fire/compat';
 import {AngularFirestoreModule} from '@angular/fire/compat/firestore';
 import {AngularFireAuthModule} from '@angular/fire/compat/auth';
 import {ReadingDbService} from './services/readingdb.service';
+import {AngularFireAnalyticsModule, CONFIG} from "@angular/fire/compat/analytics";
 
 @NgModule({
     declarations: [AppComponent,
@@ -25,11 +25,18 @@ import {ReadingDbService} from './services/readingdb.service';
         AppRoutingModule,
         ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
         AngularFireModule.initializeApp(environment.firebase),
+        AngularFireAnalyticsModule,
         AngularFirestoreModule,
         AngularFireAuthModule,
     ],
     providers: [
-        AnalyticsProvider,
+        {
+            provide: CONFIG, useValue: {
+                send_page_view: false,
+                allow_ad_personalization_signals: false,
+                anonymize_ip: true
+            }
+        },
         ReadingDbService,
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
     ],

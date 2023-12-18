@@ -6,6 +6,7 @@ import {MONTHS} from '../app.component';
 import {CalendarComponent, CalendarComponentOptions} from 'ion7-calendar';
 import {ReadingDbService} from '../services/readingdb.service';
 import {AuthService} from '../auth/auth.service';
+import {AngularFireAnalytics} from "@angular/fire/compat/analytics";
 
 @Component({
     selector: 'app-month',
@@ -32,6 +33,7 @@ export class MonthPage implements OnInit {
                 private router: Router,
                 private route: ActivatedRoute,
                 private material: MaterialService,
+                private analytics: AngularFireAnalytics,
                 private readDb: ReadingDbService) {
     }
 
@@ -64,6 +66,7 @@ export class MonthPage implements OnInit {
 
     ionViewDidEnter() {
         this.calendarRef.setViewDate(this.optionsMulti.from);
+        this.analytics.setCurrentScreen(`month-${this.monthName}`);
     }
 
     ngOnDestroy() {

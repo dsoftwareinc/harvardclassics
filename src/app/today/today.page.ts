@@ -2,12 +2,12 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import * as moment from 'moment';
 import {MaterialService} from '../services/material.service';
-import {AnalyticsProvider} from '../services/analytics.service';
 import {ActionSheetController, ScrollCustomEvent} from '@ionic/angular';
 import {EVENT_FINISHED_READING} from '../constants';
 import {TextSelectEventDirective} from './text-select-event.directive';
 import {ReadingDbService} from '../services/readingdb.service';
 import {Events} from "../services/events.service";
+import {AngularFireAnalytics} from "@angular/fire/compat/analytics";
 
 
 @Component({
@@ -34,7 +34,7 @@ export class TodayPage implements OnInit {
     constructor(private route: ActivatedRoute,
                 private material: MaterialService,
                 private events: Events,
-                private analytics: AnalyticsProvider,
+                private analytics: AngularFireAnalytics,
                 private actionSheetController: ActionSheetController,
                 private db: ReadingDbService,) {
     }
@@ -127,7 +127,7 @@ export class TodayPage implements OnInit {
     }
 
     private refreshView() {
-        this.analytics.trackView(`day-${this.day}`);
+        this.analytics.setCurrentScreen(`day-${this.day}`);
         const today = moment('2016-' + this.day);
         this.title = moment('2016-' + this.day).format('MMMM DD');
         this.yesterday = today.subtract(1, 'days').format('MMM DD');

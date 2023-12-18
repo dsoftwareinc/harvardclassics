@@ -1,8 +1,6 @@
 import {Component} from '@angular/core';
 import {Platform} from '@ionic/angular';
-import {AnalyticsProvider} from './services/analytics.service';
 import 'hammerjs';
-import {GOOGLE_ANALYTICS_ID} from '../environments/environment';
 import {ReadingDbService} from './services/readingdb.service';
 
 export const MONTHS = ['January',
@@ -17,8 +15,7 @@ export class AppComponent {
     public appPages = [];
 
     constructor(private platform: Platform,
-                private readDb: ReadingDbService,
-                public analyticsProvider: AnalyticsProvider) {
+                private readDb: ReadingDbService) {
         MONTHS.forEach((month, index) => {
             this.appPages.push({
                 title: month,
@@ -35,6 +32,5 @@ export class AppComponent {
                 console.log('Mobile?');
             }
         });
-        this.analyticsProvider.startTrackerWithId(GOOGLE_ANALYTICS_ID);
     }
 }
