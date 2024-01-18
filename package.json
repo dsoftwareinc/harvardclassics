@@ -15,15 +15,15 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "~17.0.9",
-    "@angular/common": "~17.0.9",
-    "@angular/core": "~17.0.9",
+    "@angular/animations": "~17.1.0",
+    "@angular/common": "~17.1.0",
+    "@angular/core": "~17.1.0",
     "@angular/fire": "^17.0.1",
-    "@angular/forms": "~17.0.9",
-    "@angular/platform-browser": "~17.0.9",
-    "@angular/platform-browser-dynamic": "~17.0.9",
-    "@angular/router": "~17.0.9",
-    "@angular/service-worker": "~17.0.9",
+    "@angular/forms": "~17.1.0",
+    "@angular/platform-browser": "~17.1.0",
+    "@angular/platform-browser-dynamic": "~17.1.0",
+    "@angular/router": "~17.1.0",
+    "@angular/service-worker": "~17.1.0",
     "@ionic/angular": "^7.6.5",
     "@ionic/core": "^7.6.5",
     "@ionic/storage": "^4.0.0",
@@ -39,16 +39,16 @@
     "zone.js": "~0.14.3"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^17.0.10",
+    "@angular-devkit/build-angular": "^17.1.0",
     "@angular-eslint/builder": "17.2.0",
     "@angular-eslint/eslint-plugin": "17.2.0",
     "@angular-eslint/eslint-plugin-template": "17.2.0",
     "@angular-eslint/schematics": "17.2.0",
     "@angular-eslint/template-parser": "17.2.0",
-    "@angular/cli": "~17.0.10",
-    "@angular/compiler": "~17.0.9",
-    "@angular/compiler-cli": "~17.0.9",
-    "@angular/language-service": "~17.0.9",
+    "@angular/cli": "~17.1.0",
+    "@angular/compiler": "~17.1.0",
+    "@angular/compiler-cli": "~17.1.0",
+    "@angular/language-service": "~17.1.0",
     "@ionic/angular-toolkit": "^11.0.0",
     "@types/hammerjs": "^2.0.45",
     "@types/luxon": "^3.4.1",
@@ -64,6 +64,6 @@
     "eslint-plugin-react": "^7.33.2",
     "prettier": "^3.2.4",
     "ts-node": "~10.9.2",
-    "typescript": "5.2.2"
+    "typescript": "5.3.3"
   }
 }
