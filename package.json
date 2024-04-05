@@ -64,6 +64,6 @@
     "eslint-plugin-react": "^7.34.1",
     "prettier": "^3.2.5",
     "ts-node": "~10.9.2",
-    "typescript": "5.4.3"
+    "typescript": "5.4.4"
   }
 }
