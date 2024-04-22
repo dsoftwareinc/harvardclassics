@@ -53,9 +53,9 @@
     "@types/hammerjs": "^2.0.45",
     "@types/luxon": "^3.4.2",
     "@types/node": "~20.12.7",
-    "@typescript-eslint/eslint-plugin": "7.7.0",
-    "@typescript-eslint/parser": "7.7.0",
-    "eslint": "^9.0.0",
+    "@typescript-eslint/eslint-plugin": "7.7.1",
+    "@typescript-eslint/parser": "7.7.1",
+    "eslint": "^9.1.1",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.29.1",
@@ -65,5 +65,6 @@
     "prettier": "^3.2.5",
     "ts-node": "~10.9.2",
     "typescript": "5.4.5"
-  }
+  },
+  "packageManager": "pnpm@9.0.2+sha1.2a34aeb80bf8e8435815d14f620ec4ba0eff1604"
 }
