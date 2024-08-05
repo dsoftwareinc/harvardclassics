@@ -65,6 +65,5 @@
     "prettier": "^3.3.3",
     "ts-node": "~10.9.2",
     "typescript": "5.5.4"
-  },
-  "packageManager": "pnpm@9.0.2+sha1.2a34aeb80bf8e8435815d14f620ec4ba0eff1604"
+  }
 }

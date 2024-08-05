@@ -43,7 +43,7 @@ export class TodayPage implements OnInit {
     this.sub = this.route.params.subscribe((params) => {
       this.day = params["day"];
       if (this.day === null || this.day === undefined) {
-        this.day = DateTime.now().toFormat("MM-DD");
+        this.day = DateTime.now().toFormat("MM-dd");
       }
       this.refreshView();
     });
@@ -139,8 +139,8 @@ export class TodayPage implements OnInit {
     this.analytics.setCurrentScreen(`day-${this.day}`);
     const today = DateTime.fromFormat("2016-" + this.day, "yyyy-MM-dd");
     this.title = today.toFormat("MMMM dd");
-    this.yesterday = today.minus({ days: 1 }).toFormat("MMM dd");
-    this.tomorrow = today.plus({ days: 2 }).toFormat("MMM dd");
+    this.yesterday = today.minus({ days: 1 }).toFormat("MMMM dd");
+    this.tomorrow = today.plus({ days: 2 }).toFormat("MMMM dd");
     const split = this.day.split("-");
     const month: string = split[0];
     console.log(`Loading assets/${month}/${this.day}`);
