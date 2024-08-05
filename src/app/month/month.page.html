@@ -9,7 +9,7 @@
 
 <ion-content #content class="ion-padding width-80">
     <ion-calendar #calendar
-                  (select)="onSelect($event)"
+                  (onSelect)="onSelect($event)"
                   [(ngModel)]="dateMulti"
                   [options]="optionsMulti"
                   format="YYYY-MM-DD"
