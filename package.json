@@ -33,6 +33,7 @@
     "file-saver": "^2.0.5",
     "firebase": "^10.12.5",
     "hammerjs": "^2.0.8",
+    "ionicons": "^7.4.0",
     "luxon": "^3.5.0",
     "pnpm": "^9.7.0",
     "rxjs": "^7.8.1",
