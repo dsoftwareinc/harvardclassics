@@ -37,7 +37,7 @@ export class TodayPage implements OnInit {
     private analytics: AngularFireAnalytics,
     private actionSheetController: ActionSheetController,
     private db: ReadingDbService,
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.sub = this.route.params.subscribe((params) => {
@@ -140,7 +140,7 @@ export class TodayPage implements OnInit {
     const today = DateTime.fromFormat("2016-" + this.day, "yyyy-MM-dd");
     this.title = today.toFormat("MMMM dd");
     this.yesterday = today.minus({ days: 1 }).toFormat("MMMM dd");
-    this.tomorrow = today.plus({ days: 2 }).toFormat("MMMM dd");
+    this.tomorrow = today.plus({ days: 1 }).toFormat("MMMM dd");
     const split = this.day.split("-");
     const month: string = split[0];
     console.log(`Loading assets/${month}/${this.day}`);
