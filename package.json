@@ -35,7 +35,7 @@
     "hammerjs": "^2.0.8",
     "ionicons": "^7.4.0",
     "luxon": "^3.5.0",
-    "pnpm": "^9.12.0",
+    "pnpm": "^9.12.1",
     "rxjs": "^7.8.1",
     "tslib": "^2.7.0",
     "zone.js": "~0.15.0"
@@ -54,12 +54,12 @@
     "@ionic/angular-toolkit": "^12.1.1",
     "@types/hammerjs": "^2.0.45",
     "@types/node": "~22.7.4",
-    "@typescript-eslint/eslint-plugin": "8.8.0",
-    "@typescript-eslint/parser": "8.8.0",
-    "eslint": "^9.11.1",
+    "@typescript-eslint/eslint-plugin": "8.8.1",
+    "@typescript-eslint/parser": "8.8.1",
+    "eslint": "^9.12.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-import": "^2.30.0",
+    "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-jsx-a11y": "^6.10.0",
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-react": "^7.37.1",
@@ -67,5 +67,5 @@
     "ts-node": "~10.9.2",
     "typescript": "5.5.4"
   },
-  "packageManager": "pnpm@9.10.0+sha512.73a29afa36a0d092ece5271de5177ecbf8318d454ecd701343131b8ebc0c1a91c487da46ab77c8e596d6acf1461e3594ced4becedf8921b074fbd8653ed7051c"
+  "packageManager": "pnpm@9.12.1+sha512.e5a7e52a4183a02d5931057f7a0dbff9d5e9ce3161e33fa68ae392125b79282a8a8a470a51dfc8a0ed86221442eb2fb57019b0990ed24fab519bf0e1bc5ccfc4"
 }
