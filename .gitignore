@@ -34,3 +34,4 @@ Thumbs.db
 UserInterfaceState.xcuserstate
 .angular
 tags
+src/environments/*
