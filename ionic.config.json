@@ -1,7 +1,5 @@
 {
   "name": "harvardclassics",
-  "integrations": {
-    "cordova": {}
-  },
+  "integrations": {},
   "type": "angular"
 }
