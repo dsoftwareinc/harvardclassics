@@ -45,7 +45,6 @@
             ],
             "scripts": [],
             "allowedCommonJsDependencies": [
-              "moment",
               "hammerjs"
             ],
             "browser": "src/main.ts"
