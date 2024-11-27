@@ -10,9 +10,10 @@ import { AngularFireAnalytics } from "@angular/fire/compat/analytics";
 import { DateTime } from "luxon";
 
 @Component({
-  selector: "app-today",
-  templateUrl: "./today.page.html",
-  styleUrls: ["./today.page.scss"],
+    selector: "app-today",
+    templateUrl: "./today.page.html",
+    styleUrls: ["./today.page.scss"],
+    standalone: false
 })
 export class TodayPage implements OnInit {
   @ViewChild("content", { static: true }) content;

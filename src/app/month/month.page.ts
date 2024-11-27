@@ -16,6 +16,7 @@ interface ICalendarComponentOptions2 extends ICalendarComponentOptions {
     selector: "app-month",
     templateUrl: "./month.page.html",
     styleUrls: ["./month.page.scss"],
+    standalone: false
 })
 export class MonthPage implements OnInit {
     @ViewChild("calendar", {read: CalendarComponent, static: true})

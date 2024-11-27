@@ -5,6 +5,7 @@ import {AuthService} from '../auth.service';
     selector: 'app-signup',
     templateUrl: './signup.page.html',
     styleUrls: ['./signup.page.scss'],
+    standalone: false
 })
 export class SignupPage implements OnInit {
     userEmail: string;
