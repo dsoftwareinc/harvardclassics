@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { MaterialService } from "../services/material.service";
 import { ActionSheetController, ScrollCustomEvent } from "@ionic/angular";
@@ -8,6 +8,7 @@ import { ReadingDbService } from "../services/readingdb.service";
 import { Events } from "../services/events.service";
 import { AngularFireAnalytics } from "@angular/fire/compat/analytics";
 import { DateTime } from "luxon";
+import { Subscription } from "rxjs";
 
 @Component({
     selector: "app-today",
@@ -15,7 +16,7 @@ import { DateTime } from "luxon";
     styleUrls: ["./today.page.scss"],
     standalone: false
 })
-export class TodayPage implements OnInit {
+export class TodayPage implements OnInit, OnDestroy {
   @ViewChild("content", { static: true }) content;
   @ViewChild("articleContent", { static: true }) articleContent;
   yesterday: string;
@@ -27,7 +28,8 @@ export class TodayPage implements OnInit {
   isFavorite: boolean = false;
   progress = 0;
   notes: string[] = [];
-  private sub: any;
+  private sub: Subscription;
+  private dbSub: Subscription;
   private clientHeight = 0;
   private markAsRead: boolean = false;
 
@@ -95,6 +97,7 @@ export class TodayPage implements OnInit {
 
   ngOnDestroy() {
     this.sub.unsubscribe();
+    this.dbSub?.unsubscribe();
   }
 
   calcDay(numberOfDays: number) {
@@ -110,10 +113,6 @@ export class TodayPage implements OnInit {
     this.isFavorite = !this.isFavorite;
   }
 
-  unmark(event: Event) {
-    console.log(event);
-  }
-
   highlightedHtml(text: string, searchStrs: string[]): string {
     if (!text || !searchStrs || searchStrs.length === 0) {
       return text;
@@ -123,7 +122,7 @@ export class TodayPage implements OnInit {
       searchStrs.forEach((query) => {
         const startIndex = text.toLowerCase().indexOf(query.toLowerCase());
         if (startIndex !== -1) {
-          const matchingString = text.substring(startIndex, query.length);
+          const matchingString = text.substring(startIndex, startIndex + query.length);
           const escaped = matchingString
             .replace(/&/g, '&amp;')
             .replace(/</g, '&lt;')
@@ -143,6 +142,7 @@ export class TodayPage implements OnInit {
   }
 
   private refreshView() {
+    this.markAsRead = false;
     this.analytics.setCurrentScreen(`day-${this.day}`);
     const today = DateTime.fromFormat("2016-" + this.day, "yyyy-MM-dd");
     this.title = today.toFormat("MMMM dd");
@@ -150,7 +150,6 @@ export class TodayPage implements OnInit {
     this.tomorrow = today.plus({ days: 1 }).toFormat("MMMM dd");
     const split = this.day.split("-");
     const month: string = split[0];
-    console.log(`Loading assets/${month}/${this.day}`);
     this.material.ready().then((json) => {
       const dayData = json[month].find((item) => {
         return item.day === split[1];
@@ -159,7 +158,8 @@ export class TodayPage implements OnInit {
       this.html = dayData["content"];
       this.content.scrollToTop();
     });
-    this.db.userDocValue().subscribe((val) => {
+    this.dbSub?.unsubscribe();
+    this.dbSub = this.db.userDocValue().subscribe((val) => {
       this.isFavorite =
         val.favorites !== undefined && val.favorites.indexOf(this.day) !== -1;
       this.notes = val.notes

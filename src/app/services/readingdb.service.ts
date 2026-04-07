@@ -42,40 +42,33 @@ export class ReadingDbService {
 
     public highlightText(day: string, text: string): void {
         if (this.auth.userEmail === null) {
-            console.log('User not logged in, not saving days read');
             return;
         }
         this.userDoc.get().subscribe((val) => {
             if (val.exists) {
                 const data = val.data();
                 data.notes.push({day: day, text: text});
-                this.userDoc.update(data).then();
+                this.userDoc.update(data).then().catch(err => console.error('Error saving note:', err));
             } else {
-                const data = this.INITIAL_DATA;
-                data.notes.push({day: day, text: text});
-                this.userDoc.set(data).then();
+                const data = { ...this.INITIAL_DATA, notes: [{day: day, text: text}] };
+                this.userDoc.set(data).then().catch(err => console.error('Error creating document:', err));
             }
         });
     }
 
     public removeHighlightedText(day: string, text: string): void {
         if (this.auth.userEmail === null) {
-            console.log('User not logged in, not saving days read');
             return;
         }
         this.userDoc.get().subscribe((val) => {
-            if (val.exists) {
-                const data = val.data();
-
-                const idx = this.searchNoteInNotes(data.notes, day, text);
-                if (idx !== -1) {
-                    data.notes.splice(idx, 1);
-                    this.userDoc.update(data).then();
-                }
-            } else {
-                const data = this.INITIAL_DATA;
-                data.notes.push({day: day, text: text});
-                this.userDoc.set(data).then();
+            if (!val.exists) {
+                return;
+            }
+            const data = val.data();
+            const idx = this.searchNoteInNotes(data.notes, day, text);
+            if (idx !== -1) {
+                data.notes.splice(idx, 1);
+                this.userDoc.update(data).then().catch(err => console.error('Error removing note:', err));
             }
         });
     }
@@ -90,7 +83,6 @@ export class ReadingDbService {
 
     toggleFavorite(day: string) {
         if (this.auth.userEmail === null) {
-            console.log('User not logged in, not saving days read');
             return;
         }
         this.userDoc.get().subscribe((val) => {
@@ -102,11 +94,10 @@ export class ReadingDbService {
                 } else {
                     data.favorites.splice(dayIndex, 1);
                 }
-                this.userDoc.update(data).then();
+                this.userDoc.update(data).then().catch(err => console.error('Error updating favorites:', err));
             } else {
-                const data = this.INITIAL_DATA;
-                data.favorites.push(day);
-                this.userDoc.set(data).then();
+                const data = { ...this.INITIAL_DATA, favorites: [day] };
+                this.userDoc.set(data).then().catch(err => console.error('Error creating document:', err));
             }
         });
     }
@@ -121,13 +112,8 @@ export class ReadingDbService {
         return -1;
     }
 
-    // get ready() {
-    //     return this.userDoc !== null;
-    // }
-
     private markDayAsRead(day: string): void {
         if (this.auth.userEmail === null) {
-            console.log('User not logged in, not saving days read');
             return;
         }
         this.userDoc.get().subscribe((val) => {
@@ -135,12 +121,11 @@ export class ReadingDbService {
                 const data = val.data();
                 if (data.days.indexOf(day) === -1) {
                     data.days.push(day);
-                    this.userDoc.update(data).then();
+                    this.userDoc.update(data).then().catch(err => console.error('Error marking day as read:', err));
                 }
             } else {
-                const data = this.INITIAL_DATA;
-                data.days.push(day);
-                this.userDoc.set(data).then();
+                const data = { ...this.INITIAL_DATA, days: [day] };
+                this.userDoc.set(data).then().catch(err => console.error('Error creating document:', err));
             }
         });
     }

@@ -1,5 +1,6 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import { Subscription } from "rxjs";
 import { MaterialService } from "../services/material.service";
 import { MONTHS } from "../app.component";
 import { ReadingDbService } from "../services/readingdb.service";
@@ -15,7 +16,7 @@ import { DateTime } from "luxon";
   styleUrls: ["./month.page.scss"],
   standalone: false
 })
-export class MonthPage implements OnInit {
+export class MonthPage implements OnInit, OnDestroy {
   @ViewChild("calendar", { read: CalendarComponent, static: true })
   calendarRef: CalendarComponent;
   @ViewChild("content", { static: true }) content;
@@ -27,7 +28,8 @@ export class MonthPage implements OnInit {
     showMonthPicker: false,
     showNavigateButtons: false,
   };
-  private sub: any;
+  private sub: Subscription;
+  private dbSub: Subscription;
   month: string;
 
   constructor(
@@ -60,7 +62,7 @@ export class MonthPage implements OnInit {
       }
       this.monthName = MONTHS[Number(this.month) - 1];
     });
-    this.readDb.userDocValue().subscribe((data) => {
+    this.dbSub = this.readDb.userDocValue().subscribe((data) => {
       const year = DateTime.now().year();
       this.dateMulti = [];
       data.days.forEach((x) => this.dateMulti.push(year + "-" + x));
@@ -78,5 +80,6 @@ export class MonthPage implements OnInit {
 
   ngOnDestroy() {
     this.sub.unsubscribe();
+    this.dbSub?.unsubscribe();
   }
 }

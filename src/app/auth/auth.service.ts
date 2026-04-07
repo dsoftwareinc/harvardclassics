@@ -18,7 +18,7 @@ export class AuthService {
                 localStorage.setItem('user', JSON.stringify(this.user));
                 this.events.publish(EVENT_USER_LOGIN, user);
             } else {
-                localStorage.setItem('user', null);
+                localStorage.removeItem('user');
             }
         });
     }
@@ -49,11 +49,6 @@ export class AuthService {
             console.error('Login error:', e);
             alert('Login failed. Please check your email and password.');
         }
-    }
-
-    facebookLogin() {
-        const authProvider = new firebase.auth.FacebookAuthProvider();
-        this.afAuth.signInWithPopup(authProvider).then();
     }
 
     googleLogin() {

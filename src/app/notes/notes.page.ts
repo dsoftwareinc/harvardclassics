@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { ReadingDbService } from '../services/readingdb.service';
-import { MaterialService } from '../services/material.service';
 
 @Component({
   selector: 'app-notes',
@@ -8,38 +8,29 @@ import { MaterialService } from '../services/material.service';
   styleUrls: ['./notes.page.scss'],
   standalone: false
 })
-export class NotesPage implements OnInit {
-  data: any;
-  notes: any = {};
+export class NotesPage implements OnInit, OnDestroy {
+  notes: Record<string, { day: string; text: string }[]> = {};
+  private dbSub: Subscription;
 
-  constructor(private db: ReadingDbService,
-    private material: MaterialService) {
+  constructor(private db: ReadingDbService) {
   }
 
   ngOnInit() {
-    this.material.ready().then(json => {
-      this.data = json;
-    });
-    console.log(`Adding notes`);
-    this.db.userDocValue().subscribe(data => {
-      const userNotes = data.notes;
-      this.notes = [];
-      userNotes.forEach(note => {
-        const month = note.day.substring(0, 2);
-        const day = note.day.substring(3, 2);
+    this.dbSub = this.db.userDocValue().subscribe(data => {
+      this.notes = {};
+      data.notes.forEach(note => {
         const key = '2016-' + note.day;
         this.notes[key] = this.notes[key] || [];
-        this.notes[key].push({
-          title: +note.day,
-          day: note.day,
-          text: note.text,
-        });
+        this.notes[key].push({ day: note.day, text: note.text });
       });
-      console.log(`Added ${userNotes.length} notes`);
     });
   }
 
-  deleteNote(item: any) {
+  ngOnDestroy() {
+    this.dbSub?.unsubscribe();
+  }
+
+  deleteNote(item: { day: string; text: string }) {
     this.db.removeHighlightedText(item.day, item.text);
   }
 }
