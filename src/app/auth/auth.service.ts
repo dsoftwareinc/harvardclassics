@@ -37,7 +37,8 @@ export class AuthService {
         try {
             await this.afAuth.createUserWithEmailAndPassword(email, password);
         } catch (e) {
-            alert('Error!' + e.message);
+            console.error('Signup error:', e);
+            alert('Sign up failed. Please check your details and try again.');
         }
     }
 
@@ -45,7 +46,8 @@ export class AuthService {
         try {
             await this.afAuth.signInWithEmailAndPassword(email, password);
         } catch (e) {
-            alert('Error!' + e.message);
+            console.error('Login error:', e);
+            alert('Login failed. Please check your email and password.');
         }
     }
 

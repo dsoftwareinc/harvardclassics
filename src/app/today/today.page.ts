@@ -124,9 +124,15 @@ export class TodayPage implements OnInit {
         const startIndex = text.toLowerCase().indexOf(query.toLowerCase());
         if (startIndex !== -1) {
           const matchingString = text.substring(startIndex, query.length);
+          const escaped = matchingString
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
           text = text.replace(
             matchingString,
-            `<span (click)="unmark($event)" class="highlight">${matchingString}</span>`,
+            `<span class="highlight">${escaped}</span>`,
           );
         }
       });
