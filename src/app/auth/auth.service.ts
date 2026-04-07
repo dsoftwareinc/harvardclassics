@@ -1,6 +1,6 @@
 import {AngularFireAuth} from '@angular/fire/compat/auth';
 import firebase from "firebase/compat/app";
-import 'firebase/compat/auth';
+import { GoogleAuthProvider } from 'firebase/auth';
 import {Injectable} from '@angular/core';
 import {EVENT_USER_LOGIN} from '../constants';
 import {Events} from "../services/events.service";
@@ -53,7 +53,7 @@ export class AuthService {
     }
 
     googleLogin() {
-        const authProvider = new firebase.auth.GoogleAuthProvider();
+        const authProvider = new GoogleAuthProvider();
         this.afAuth.signInWithPopup(authProvider).then();
     }
 
