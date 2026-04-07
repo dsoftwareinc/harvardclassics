@@ -1,5 +1,6 @@
 import {AngularFireAuth} from '@angular/fire/compat/auth';
 import firebase from "firebase/compat/app";
+import 'firebase/compat/auth';
 import {Injectable} from '@angular/core';
 import {EVENT_USER_LOGIN} from '../constants';
 import {Events} from "../services/events.service";
