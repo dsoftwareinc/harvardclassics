@@ -1,7 +1,14 @@
-import {AngularFireAuth} from '@angular/fire/compat/auth';
-import firebase from "firebase/compat/app";
-import { GoogleAuthProvider } from 'firebase/auth';
-import {Injectable} from '@angular/core';
+import { inject, Injectable } from '@angular/core';
+import {
+    Auth,
+    createUserWithEmailAndPassword,
+    GoogleAuthProvider,
+    onAuthStateChanged,
+    sendPasswordResetEmail,
+    signInWithEmailAndPassword,
+    signInWithPopup,
+    signOut,
+} from '@angular/fire/auth';
 import {EVENT_USER_LOGIN} from '../constants';
 import {Events} from "../services/events.service";
 
@@ -9,14 +16,14 @@ import {Events} from "../services/events.service";
     providedIn: 'root'
 })
 export class AuthService {
-    user: firebase.User;
+    private auth = inject(Auth);
+    user: any;
 
-    constructor(private afAuth: AngularFireAuth,
-                private events: Events,) {
-        this.afAuth.authState.subscribe(user => {
+    constructor(private events: Events) {
+        onAuthStateChanged(this.auth, user => {
             if (user) {
                 this.user = user;
-                localStorage.setItem('user', JSON.stringify(this.user));
+                localStorage.setItem('user', JSON.stringify(user));
                 this.events.publish(EVENT_USER_LOGIN, user);
             } else {
                 localStorage.removeItem('user');
@@ -36,7 +43,7 @@ export class AuthService {
 
     async emailSignup(email: string, password: string) {
         try {
-            await this.afAuth.createUserWithEmailAndPassword(email, password);
+            await createUserWithEmailAndPassword(this.auth, email, password);
         } catch (e) {
             console.error('Signup error:', e);
             alert('Sign up failed. Please check your details and try again.');
@@ -45,7 +52,7 @@ export class AuthService {
 
     async emailLogin(email: string, password: string) {
         try {
-            await this.afAuth.signInWithEmailAndPassword(email, password);
+            await signInWithEmailAndPassword(this.auth, email, password);
         } catch (e) {
             console.error('Login error:', e);
             alert('Login failed. Please check your email and password.');
@@ -53,12 +60,14 @@ export class AuthService {
     }
 
     googleLogin() {
-        const authProvider = new GoogleAuthProvider();
-        this.afAuth.signInWithPopup(authProvider).then();
+        const provider = new GoogleAuthProvider();
+        provider.addScope('profile');
+        provider.addScope('email');
+        signInWithPopup(this.auth, provider).then();
     }
 
     async logout() {
-        await this.afAuth.signOut();
         localStorage.removeItem('user');
+        await signOut(this.auth);
     }
 }

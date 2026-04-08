@@ -14,6 +14,8 @@ import {AngularFirestoreModule} from '@angular/fire/compat/firestore';
 import {AngularFireAuthModule} from '@angular/fire/compat/auth';
 import {ReadingDbService} from './services/readingdb.service';
 import {AngularFireAnalyticsModule, CONFIG} from "@angular/fire/compat/analytics";
+import {provideAuth, getAuth} from '@angular/fire/auth';
+import {provideFirebaseApp, getApp} from '@angular/fire/app';
 
 @NgModule({
     declarations: [AppComponent,
@@ -38,7 +40,9 @@ import {AngularFireAnalyticsModule, CONFIG} from "@angular/fire/compat/analytics
             }
         },
         ReadingDbService,
-        {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
+        {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
+        provideFirebaseApp(() => getApp()),
+        provideAuth(() => getAuth()),
     ],
     bootstrap: [AppComponent]
 })
