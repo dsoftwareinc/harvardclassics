@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
 import {AuthService} from '../auth.service';
 
 @Component({
@@ -11,12 +12,21 @@ export class LoginPage implements OnInit {
     userEmail: string;
     userPassword: string;
 
-    constructor(public authService: AuthService) {
+    constructor(public authService: AuthService, private router: Router) {}
 
+    ngOnInit() {}
+
+    async emailLogin() {
+        await this.authService.emailLogin(this.userEmail, this.userPassword);
+        if (this.authService.isLoggedIn) {
+            await this.router.navigateByUrl('/today', {replaceUrl: true});
+        }
     }
 
-    ngOnInit() {
+    async googleLogin() {
+        await this.authService.googleLogin();
+        if (this.authService.isLoggedIn) {
+            await this.router.navigateByUrl('/today', {replaceUrl: true});
+        }
     }
-
-
 }

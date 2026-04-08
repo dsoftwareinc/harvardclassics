@@ -63,7 +63,7 @@ export class AuthService {
         const provider = new GoogleAuthProvider();
         provider.addScope('profile');
         provider.addScope('email');
-        signInWithPopup(this.auth, provider).then();
+        return signInWithPopup(this.auth, provider);
     }
 
     async logout() {
