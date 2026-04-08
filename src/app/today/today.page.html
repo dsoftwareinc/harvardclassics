@@ -32,13 +32,17 @@
 <ion-footer>
     <ion-toolbar>
         <ion-buttons slot="start">
-            <ion-icon (click)="calcDay(-1)" name="arrow-back"></ion-icon>
-            {{ yesterday }}
+            <ion-button (click)="calcDay(-1)" fill="clear" color="dark">
+                <ion-icon name="arrow-back" style="font-size: 0.9em"></ion-icon>
+                {{ yesterday }}
+            </ion-button>
         </ion-buttons>
 
         <ion-buttons slot="end">
-            {{ tomorrow }}
-            <ion-icon (click)="calcDay(+1)" name="arrow-forward"></ion-icon>
+            <ion-button (click)="calcDay(+1)" fill="clear" color="dark">
+                {{ tomorrow }}
+                <ion-icon name="arrow-forward" style="font-size: 0.9em"></ion-icon>
+            </ion-button>
         </ion-buttons>
     </ion-toolbar>
 </ion-footer>
