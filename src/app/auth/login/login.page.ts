@@ -24,8 +24,8 @@ export class LoginPage implements OnInit {
     }
 
     async googleLogin() {
-        await this.authService.googleLogin();
-        if (this.authService.isLoggedIn) {
+        const result = await this.authService.googleLogin();
+        if (result?.user) {
             await this.router.navigateByUrl('/today', {replaceUrl: true});
         }
     }
