@@ -119,20 +119,16 @@ export class TodayPage implements OnInit, OnDestroy {
     try {
       text = text.replace(/(\r\n|\n|\r)/gm, " ");
       searchStrs.forEach((query) => {
-        const startIndex = text.toLowerCase().indexOf(query.toLowerCase());
-        if (startIndex !== -1) {
-          const matchingString = text.substring(startIndex, startIndex + query.length);
-          const escaped = matchingString
+        const regex = new RegExp(query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
+        text = text.replace(regex, (match) => {
+          const safe = match
             .replace(/&/g, '&amp;')
             .replace(/</g, '&lt;')
             .replace(/>/g, '&gt;')
             .replace(/"/g, '&quot;')
             .replace(/'/g, '&#039;');
-          text = text.replace(
-            matchingString,
-            `<span class="highlight">${escaped}</span>`,
-          );
-        }
+          return `<span class="highlight">${safe}</span>`;
+        });
       });
     } catch (exception) {
       console.error("error in highlight:", exception);
