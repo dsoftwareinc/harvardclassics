@@ -1,5 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
+import {authGuard} from './auth/auth.guard';
 
 const routes: Routes = [
     {path: '', redirectTo: 'today', pathMatch: 'full'},
@@ -29,7 +30,8 @@ const routes: Routes = [
     },
     {
         path: 'notes',
-        loadChildren: () => import('./notes/notes.module').then(m => m.NotesPageModule)
+        loadChildren: () => import('./notes/notes.module').then(m => m.NotesPageModule),
+        canActivate: [authGuard]
     },
 ];
 
