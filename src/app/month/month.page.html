@@ -16,7 +16,7 @@
     type="string">
   </ion-calendar>
 
-  @for (item of data; track item) {
+  @for (item of data; track item.day) {
     <ion-card
       [id]="month+'-'+item.day"
       [routerLink]="'/day/'+month+'-'+item.day"

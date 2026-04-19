@@ -6,7 +6,6 @@ import {RouterModule, Routes} from '@angular/router';
 import {IonicModule} from '@ionic/angular';
 
 import {TodayPage} from './today.page';
-import {HttpClientModule} from '@angular/common/http';
 import {TextSelectDirective} from './text-select-event.directive';
 
 const routes: Routes = [
@@ -22,7 +21,6 @@ const routes: Routes = [
         FormsModule,
         IonicModule,
         RouterModule.forChild(routes),
-        HttpClientModule,
     ],
     declarations: [
         TodayPage,

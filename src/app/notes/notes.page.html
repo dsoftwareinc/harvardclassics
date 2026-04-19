@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content>
-  @for (item of notes| keyvalue; track item) {
+  @for (item of notes| keyvalue; track item.key) {
     <ion-card>
       <ion-card-header>
         <ion-card-title>
@@ -16,7 +16,7 @@
         </ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        @for (note of $any(item).value; track note) {
+        @for (note of $any(item).value; track note.text) {
           <ion-item-sliding>
             <ion-item>
               {{note.text}}

@@ -139,7 +139,7 @@ export class TodayPage implements OnInit, OnDestroy {
   private refreshView() {
     this.markAsRead = false;
     this.analytics.setCurrentScreen(`day-${this.day}`);
-    const today = DateTime.fromFormat("2016-" + this.day, "yyyy-MM-dd");
+    const today = DateTime.fromFormat("2015-" + this.day, "yyyy-MM-dd");
     this.title = today.toFormat("MMMM dd");
     this.yesterday = today.minus({ days: 1 }).toFormat("MMMM dd");
     this.tomorrow = today.plus({ days: 1 }).toFormat("MMMM dd");
