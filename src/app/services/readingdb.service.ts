@@ -1,5 +1,5 @@
-import {Injectable} from '@angular/core';
-import {EVENT_FINISHED_READING} from '../constants';
+import {Injectable, OnDestroy} from '@angular/core';
+import {EVENT_FINISHED_READING, EVENT_USER_LOGIN} from '../constants';
 import {AngularFirestore, AngularFirestoreDocument} from '@angular/fire/compat/firestore';
 
 import {EMPTY} from 'rxjs';
@@ -20,8 +20,9 @@ export interface Item {
 @Injectable({
     providedIn: 'root'
 })
-export class ReadingDbService {
+export class ReadingDbService implements OnDestroy {
     private userDoc: AngularFirestoreDocument<Item> = null;
+    private markDayAsReadHandler = (day: string) => this.markDayAsRead(day);
     private INITIAL_DATA = {
         days: [],
         favorites: [],
@@ -32,12 +33,16 @@ export class ReadingDbService {
                 private events: Events,
                 private afs: AngularFirestore) {
         if (this.auth.userEmail) {
-            console.log(`User authenticating ${this.auth.userEmail}`);
             this.userDoc = afs.doc<Item>(`/users/${this.auth.userEmail}`);
         }
-        events.subscribe(EVENT_FINISHED_READING, day => {
-            this.markDayAsRead(day);
+        events.subscribe(EVENT_FINISHED_READING, this.markDayAsReadHandler);
+        events.subscribe(EVENT_USER_LOGIN, (user: any) => {
+            this.userDoc = afs.doc<Item>(`/users/${user.email}`);
         });
+    }
+
+    ngOnDestroy() {
+        this.events.unsubscribe(EVENT_FINISHED_READING, this.markDayAsReadHandler);
     }
 
     public highlightText(day: string, text: string): void {
