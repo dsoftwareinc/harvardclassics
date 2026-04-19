@@ -41,9 +41,7 @@
               }
             ],
             "scripts": [],
-            "allowedCommonJsDependencies": [
-              "hammerjs"
-            ],
+            "allowedCommonJsDependencies": [],
             "browser": "src/main.ts"
           },
           "configurations": {
