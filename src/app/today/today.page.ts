@@ -110,7 +110,6 @@ export class TodayPage implements OnInit, OnDestroy {
 
   toggleFavorite() {
     this.db.toggleFavorite(this.day);
-    this.isFavorite = !this.isFavorite;
   }
 
   highlightedHtml(text: string, searchStrs: string[]): string {
