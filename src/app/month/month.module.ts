@@ -6,8 +6,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { IonCalendarModule } from '@heliomarpm/ion-calendar';
 import { MonthPage } from './month.page';
-import { AngularFireModule } from "@angular/fire/compat";
-import { environment } from "../../environments/environment";
 
 const routes: Routes = [
   {
@@ -22,7 +20,6 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes),
-    AngularFireModule.initializeApp(environment.firebase),
     IonCalendarModule,
   ],
   declarations: [
