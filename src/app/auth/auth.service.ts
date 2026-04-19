@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, OnDestroy } from '@angular/core';
 import {
     Auth,
     createUserWithEmailAndPassword,
@@ -15,14 +15,19 @@ import {Events} from "../services/events.service";
 @Injectable({
     providedIn: 'root'
 })
-export class AuthService {
+export class AuthService implements OnDestroy {
     private auth = inject(Auth);
-    user: any;
+    private unsubscribeAuth: () => void;
+    user: any = null;
 
     constructor(private events: Events) {
-        onAuthStateChanged(this.auth, user => {
+        const stored = localStorage.getItem('user');
+        if (stored) {
+            this.user = JSON.parse(stored);
+        }
+        this.unsubscribeAuth = onAuthStateChanged(this.auth, user => {
+            this.user = user ?? null;
             if (user) {
-                this.user = user;
                 localStorage.setItem('user', JSON.stringify(user));
                 this.events.publish(EVENT_USER_LOGIN, user);
             } else {
@@ -31,14 +36,16 @@ export class AuthService {
         });
     }
 
-    get isLoggedIn(): boolean {
-        const user = JSON.parse(localStorage.getItem('user'));
-        return user !== null;
+    ngOnDestroy() {
+        this.unsubscribeAuth();
     }
 
-    get userEmail() {
-        const user = JSON.parse(localStorage.getItem('user'));
-        return user ? user.email : null;
+    get isLoggedIn(): boolean {
+        return this.user !== null;
+    }
+
+    get userEmail(): string | null {
+        return this.user?.email ?? null;
     }
 
     async emailSignup(email: string, password: string) {
