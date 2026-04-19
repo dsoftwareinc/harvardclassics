@@ -145,22 +145,21 @@ export class TodayPage implements OnInit, OnDestroy {
     this.tomorrow = today.plus({ days: 1 }).toFormat("MMMM dd");
     const split = this.day.split("-");
     const month: string = split[0];
+    this.dbSub?.unsubscribe();
+    this.dbSub = null;
     this.material.ready().then((json) => {
-      const dayData = json[month].find((item) => {
-        return item.day === split[1];
-      });
+      const dayData = json[month].find((item) => item.day === split[1]);
       this.header = dayData["title"];
       this.html = dayData["content"];
       this.content.scrollToTop();
-    });
-    this.dbSub?.unsubscribe();
-    this.dbSub = this.db.userDocValue().subscribe((val) => {
-      this.isFavorite =
-        val.favorites !== undefined && val.favorites.indexOf(this.day) !== -1;
-      this.notes = val.notes
-        .filter((note) => note.day === this.day)
-        .map((note) => note.text);
-      this.html = this.highlightedHtml(this.html, this.notes);
+      this.dbSub = this.db.userDocValue().subscribe((val) => {
+        this.isFavorite =
+          val.favorites !== undefined && val.favorites.indexOf(this.day) !== -1;
+        this.notes = val.notes
+          .filter((note) => note.day === this.day)
+          .map((note) => note.text);
+        this.html = this.highlightedHtml(this.html, this.notes);
+      });
     });
   }
 }
