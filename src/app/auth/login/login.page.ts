@@ -9,8 +9,8 @@ import {AuthService} from '../auth.service';
     standalone: false
 })
 export class LoginPage implements OnInit {
-    userEmail: string;
-    userPassword: string;
+    userEmail!: string;
+    userPassword!: string;
 
     constructor(public authService: AuthService, private router: Router) {}
 

@@ -22,6 +22,6 @@ export class MaterialService {
         if (this.data !== null) {
             return Promise.resolve(this.data);
         }
-        return this.loadPromise;
+        return this.loadPromise!;
     }
 }

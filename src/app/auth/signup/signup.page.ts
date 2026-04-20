@@ -8,8 +8,8 @@ import {AuthService} from '../auth.service';
     standalone: false
 })
 export class SignupPage {
-    userEmail: string;
-    userPassword: string;
+    userEmail!: string;
+    userPassword!: string;
 
     constructor(public authService: AuthService) {}
 }

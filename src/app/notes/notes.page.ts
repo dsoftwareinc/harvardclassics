@@ -10,13 +10,14 @@ import { ReadingDbService } from '../services/readingdb.service';
 })
 export class NotesPage implements OnInit, OnDestroy {
   notes: Record<string, { day: string; text: string }[]> = {};
-  private dbSub: Subscription;
+  private dbSub!: Subscription;
 
   constructor(private db: ReadingDbService) {
   }
 
   ngOnInit() {
     this.dbSub = this.db.userDocValue().subscribe(data => {
+      if (!data) return;
       this.notes = {};
       data.notes.forEach(note => {
         const key = '2015-' + note.day;

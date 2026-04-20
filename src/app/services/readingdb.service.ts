@@ -21,7 +21,7 @@ export interface Item {
     providedIn: 'root'
 })
 export class ReadingDbService implements OnDestroy {
-    private userDoc: AngularFirestoreDocument<Item> = null;
+    private userDoc: AngularFirestoreDocument<Item> | null = null;
     private markDayAsReadHandler = (day: string) => this.markDayAsRead(day);
     private INITIAL_DATA = {
         days: [],
@@ -49,14 +49,15 @@ export class ReadingDbService implements OnDestroy {
         if (this.auth.userEmail === null) {
             return;
         }
-        this.userDoc.get().subscribe((val) => {
+        this.userDoc!.get().subscribe((val) => {
             if (val.exists) {
                 const data = val.data();
+                if (!data) return;
                 data.notes.push({day: day, text: text});
-                this.userDoc.update(data).then().catch(err => console.error('Error saving note:', err));
+                this.userDoc!.update(data).then().catch(err => console.error('Error saving note:', err));
             } else {
                 const data = { ...this.INITIAL_DATA, notes: [{day: day, text: text}] };
-                this.userDoc.set(data).then().catch(err => console.error('Error creating document:', err));
+                this.userDoc!.set(data).then().catch(err => console.error('Error creating document:', err));
             }
         });
     }
@@ -65,15 +66,16 @@ export class ReadingDbService implements OnDestroy {
         if (this.auth.userEmail === null) {
             return;
         }
-        this.userDoc.get().subscribe((val) => {
+        this.userDoc!.get().subscribe((val) => {
             if (!val.exists) {
                 return;
             }
             const data = val.data();
+            if (!data) return;
             const idx = this.searchNoteInNotes(data.notes, day, text);
             if (idx !== -1) {
                 data.notes.splice(idx, 1);
-                this.userDoc.update(data).then().catch(err => console.error('Error removing note:', err));
+                this.userDoc!.update(data).then().catch(err => console.error('Error removing note:', err));
             }
         });
     }
@@ -83,26 +85,27 @@ export class ReadingDbService implements OnDestroy {
             console.log('User not logged in, not returning days read');
             return EMPTY;
         }
-        return this.userDoc?.valueChanges();
+        return this.userDoc?.valueChanges() ?? EMPTY;
     }
 
     toggleFavorite(day: string) {
         if (this.auth.userEmail === null) {
             return;
         }
-        this.userDoc.get().subscribe((val) => {
+        this.userDoc!.get().subscribe((val) => {
             if (val.exists) {
                 const data = val.data();
+                if (!data) return;
                 const dayIndex = data.favorites.indexOf(day);
                 if (dayIndex === -1) {
                     data.favorites.push(day);
                 } else {
                     data.favorites.splice(dayIndex, 1);
                 }
-                this.userDoc.update(data).then().catch(err => console.error('Error updating favorites:', err));
+                this.userDoc!.update(data).then().catch(err => console.error('Error updating favorites:', err));
             } else {
                 const data = { ...this.INITIAL_DATA, favorites: [day] };
-                this.userDoc.set(data).then().catch(err => console.error('Error creating document:', err));
+                this.userDoc!.set(data).then().catch(err => console.error('Error creating document:', err));
             }
         });
     }
@@ -121,16 +124,16 @@ export class ReadingDbService implements OnDestroy {
         if (this.auth.userEmail === null) {
             return;
         }
-        this.userDoc.get().subscribe((val) => {
+        this.userDoc!.get().subscribe((val) => {
             if (val.exists) {
                 const data = val.data();
-                if (data.days.indexOf(day) === -1) {
+                if (data && data.days.indexOf(day) === -1) {
                     data.days.push(day);
-                    this.userDoc.update(data).then().catch(err => console.error('Error marking day as read:', err));
+                    this.userDoc!.update(data).then().catch(err => console.error('Error marking day as read:', err));
                 }
             } else {
                 const data = { ...this.INITIAL_DATA, days: [day] };
-                this.userDoc.set(data).then().catch(err => console.error('Error creating document:', err));
+                this.userDoc!.set(data).then().catch(err => console.error('Error creating document:', err));
             }
         });
     }

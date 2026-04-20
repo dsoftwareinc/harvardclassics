@@ -18,19 +18,19 @@ import { DateTime } from "luxon";
 })
 export class MonthPage implements OnInit, OnDestroy {
   @ViewChild("calendar", { read: CalendarComponent, static: true })
-  calendarRef: CalendarComponent;
-  @ViewChild("content", { static: true }) content;
-  monthName: string;
-  data: Array<any> = null;
+  calendarRef!: CalendarComponent;
+  @ViewChild("content", { static: true }) content!: any;
+  monthName!: string;
+  data: Array<any> | null = null;
   dateMulti: string[] = [];
   optionsMulti: ICalendarComponentOptions = {
     pickMode: "multi",
     showMonthPicker: false,
     showNavigateButtons: false,
   };
-  private sub: Subscription;
-  private dbSub: Subscription;
-  month: string;
+  private sub!: Subscription;
+  private dbSub!: Subscription;
+  month!: string;
 
   constructor(
     private auth: AuthService,
@@ -42,7 +42,7 @@ export class MonthPage implements OnInit, OnDestroy {
   ) {
   }
 
-  onSelect(dateSelected) {
+  onSelect(dateSelected: any) {
     const day = dateSelected.title.length < 2 ? `0${dateSelected.title}` : dateSelected.title;
     // const yOffset = document.getElementById(`${this.month}-${dateSelected.title}`).offsetTop;
     // this.content.scrollTo(0, yOffset, 1000);
@@ -53,7 +53,7 @@ export class MonthPage implements OnInit, OnDestroy {
     this.sub = this.route.params.subscribe((params) => {
       this.month = params["month"];
       const month = Number(this.month);
-      const monthDate = DateTime.now().set({ months: month });
+      const monthDate = DateTime.now().set({ month: month });
 
       this.optionsMulti.from = monthDate.startOf("month").toJSDate();
       this.optionsMulti.to = monthDate.endOf("month").toJSDate();
@@ -63,9 +63,9 @@ export class MonthPage implements OnInit, OnDestroy {
       this.monthName = MONTHS[Number(this.month) - 1];
     });
     this.dbSub = this.readDb.userDocValue().subscribe((data) => {
-      const year = DateTime.now().year();
+      const year = DateTime.now().year;
       this.dateMulti = [];
-      data.days.forEach((x) => this.dateMulti.push(year + "-" + x));
+      if (data) data.days.forEach((x) => this.dateMulti.push(year + "-" + x));
     });
     this.material.ready().then((json) => {
       this.data = json[this.month];

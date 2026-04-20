@@ -11,7 +11,7 @@ export const MONTHS = ['January',
     standalone: false
 })
 export class AppComponent {
-    public appPages = [];
+    public appPages: { title: string; url: string; icon: string }[] = [];
 
     constructor(private readDb: ReadingDbService) {
         MONTHS.forEach((month, index) => {

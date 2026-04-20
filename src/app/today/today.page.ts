@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { MaterialService } from "../services/material.service";
 import { ActionSheetController, ScrollCustomEvent } from "@ionic/angular";
@@ -17,19 +17,20 @@ import { Subscription } from "rxjs";
     standalone: false
 })
 export class TodayPage implements OnInit, OnDestroy {
-  @ViewChild("content", { static: true }) content;
-  @ViewChild("articleContent", { static: true }) articleContent;
-  yesterday: string;
-  tomorrow: string;
-  day: string;
-  title: string;
-  header: string;
-  html: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  @ViewChild("content", { static: true }) content!: any;
+  @ViewChild("articleContent", { static: true }) articleContent!: ElementRef;
+  yesterday!: string;
+  tomorrow!: string;
+  day!: string;
+  title!: string;
+  header!: string;
+  html!: string;
   isFavorite: boolean = false;
   progress = 0;
   notes: string[] = [];
-  private sub: Subscription;
-  private dbSub: Subscription;
+  private sub!: Subscription;
+  private dbSub: Subscription | null = null;
   private clientHeight = 0;
   private markAsRead: boolean = false;
 
@@ -148,11 +149,12 @@ export class TodayPage implements OnInit, OnDestroy {
     this.dbSub?.unsubscribe();
     this.dbSub = null;
     this.material.ready().then((json) => {
-      const dayData = json[month].find((item) => item.day === split[1]);
+      const dayData = json[month].find((item: any) => item.day === split[1]);
       this.header = dayData["title"];
       this.html = dayData["content"];
       this.content.scrollToTop();
       this.dbSub = this.db.userDocValue().subscribe((val) => {
+        if (!val) return;
         this.isFavorite =
           val.favorites !== undefined && val.favorites.indexOf(this.day) !== -1;
         this.notes = val.notes

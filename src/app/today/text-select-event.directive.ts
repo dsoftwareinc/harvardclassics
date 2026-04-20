@@ -91,7 +91,7 @@ export class TextSelectDirective implements OnInit, OnDestroy {
         // Explorer, the .contains() method only works with Element nodes.
         while (container.nodeType !== Node.ELEMENT_NODE) {
 
-            container = container.parentNode;
+            container = container.parentNode as Node;
 
         }
 
@@ -136,7 +136,7 @@ export class TextSelectDirective implements OnInit, OnDestroy {
         // If the selected node is a Text node, climb up to an element node - in Internet
         // Explorer, the .contains() method only works with Element nodes.
         while (selectionContainer.nodeType !== Node.ELEMENT_NODE) {
-            selectionContainer = selectionContainer.parentNode;
+            selectionContainer = selectionContainer.parentNode as Node;
         }
         return (hostElement.contains(selectionContainer));
     }
@@ -170,7 +170,7 @@ export class TextSelectDirective implements OnInit, OnDestroy {
 
         // If the new selection is empty (for example, the user just clicked somewhere
         // in the document), then there's no new selection event to emit.
-        if (!selection.rangeCount || !selection.toString()) {
+        if (!selection || !selection.rangeCount || !selection.toString()) {
 
             return;
 
@@ -195,7 +195,7 @@ export class TextSelectDirective implements OnInit, OnDestroy {
 
                     this.hasSelection = true;
                     this.textSelectEvent.emit({
-                        text: selection.toString(),
+                        text: selection!.toString(),
                         viewportRectangle: {
                             left: viewportRectangle.left,
                             top: viewportRectangle.top,
@@ -244,7 +244,7 @@ export class TextSelectDirective implements OnInit, OnDestroy {
         do {
             localLeft += (<Element>node).scrollLeft;
             localTop += (<Element>node).scrollTop;
-        } while ((node !== host) && (node = node.parentNode));
+        } while ((node !== host) && (node = node.parentNode as Node));
 
         return ({
             left: localLeft,
