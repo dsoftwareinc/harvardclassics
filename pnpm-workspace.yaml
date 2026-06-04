@@ -1,3 +1,32 @@
+overrides:
+  # Security pins for transitive dependencies. pnpm 11 ignores `pnpm.overrides`
+  # in package.json, so overrides must live here.
+  protobufjs: '^7.5.8'
+  '@protobufjs/utf8': '^1.1.1'
+  '@grpc/grpc-js': '^1.9.15'
+  tar: '^7.5.11'
+  minimatch: '^3.1.4'
+  rollup: '^4.59.0'
+  serialize-javascript: '^7.0.5'
+  hono: '^4.12.21'
+  '@hono/node-server': '^1.19.13'
+  immutable: '^5.1.5'
+  flatted: '^3.4.2'
+  brace-expansion: '^1.1.13'
+  follow-redirects: '^1.16.0'
+  qs: '^6.15.2'
+  ip-address: '^10.1.1'
+  fast-uri: '^3.1.2'
+  'express>path-to-regexp': '0.1.13'
+  'router>path-to-regexp': '^8.4.0'
+  # picomatch: keep v2 consumers on the patched v2; force the vulnerable
+  # 4.0.0–4.0.3 range (CVE) up to 4.0.4 without disturbing the v2 line.
+  'micromatch>picomatch': '^2.3.2'
+  'anymatch>picomatch': '^2.3.2'
+  'readdirp>picomatch': '^2.3.2'
+  'picomatch@>=4.0.0 <4.0.4': '^4.0.4'
+  # ajv: only the vulnerable 8.x (<8.18.0) is forced up; the unrelated v6 line is left alone.
+  'ajv@>=8.0.0 <8.18.0': '^8.18.0'
 allowBuilds:
   '@firebase/util': true
   '@parcel/watcher': true
