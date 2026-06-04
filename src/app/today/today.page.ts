@@ -26,6 +26,7 @@ export class TodayPage implements OnInit, OnDestroy {
   title!: string;
   header!: string;
   html!: string;
+  private rawHtml = "";
   isFavorite: boolean = false;
   progress = 0;
   notes: string[] = [];
@@ -151,16 +152,18 @@ export class TodayPage implements OnInit, OnDestroy {
     this.material.ready().then((json) => {
       const dayData = json[month].find((item: any) => item.day === split[1]);
       this.header = dayData["title"];
-      this.html = dayData["content"];
+      this.rawHtml = dayData["content"];
+      this.html = this.rawHtml;
       this.content.scrollToTop();
       this.dbSub = this.db.userDocValue().subscribe((val) => {
         if (!val) return;
         this.isFavorite =
           val.favorites !== undefined && val.favorites.indexOf(this.day) !== -1;
-        this.notes = val.notes
+        this.notes = (val.notes ?? [])
           .filter((note) => note.day === this.day)
           .map((note) => note.text);
-        this.html = this.highlightedHtml(this.html, this.notes);
+        // Always highlight from the pristine content so spans never nest on re-emission.
+        this.html = this.highlightedHtml(this.rawHtml, this.notes);
       });
     });
   }

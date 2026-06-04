@@ -19,6 +19,10 @@ interface SelectionRectangle {
 
 @Directive({
     selector: '[textSelect]',
+    // Aliased output: bound as `(textSelect)` in templates but exposed as `textSelectEvent`
+    // on the class. Both the metadata form and `@Output('textSelect')` are flagged by
+    // angular-eslint rules, so the alias is declared here with the rule disabled.
+    // eslint-disable-next-line @angular-eslint/no-outputs-metadata-property
     outputs: ['textSelectEvent: textSelect'],
     standalone: false
 })
