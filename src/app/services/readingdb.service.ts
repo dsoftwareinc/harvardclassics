@@ -1,6 +1,9 @@
 import {Injectable, OnDestroy} from '@angular/core';
-import {EVENT_FINISHED_READING, EVENT_USER_LOGIN} from '../constants';
+import {EVENT_FINISHED_READING, EVENT_USER_LOGIN, EVENT_USER_LOGOUT} from '../constants';
 import {AngularFirestore, AngularFirestoreDocument} from '@angular/fire/compat/firestore';
+import firebase from 'firebase/compat/app';
+// Side-effect import: attaches the `firestore` namespace (incl. FieldValue) onto `firebase`.
+import 'firebase/compat/firestore';
 
 import {EMPTY} from 'rxjs';
 import {Events} from "./events.service";
@@ -17,17 +20,15 @@ export interface Item {
     notes: Note[];
 }
 
+const arrayUnion = (...elements: unknown[]) => firebase.firestore.FieldValue.arrayUnion(...elements);
+const arrayRemove = (...elements: unknown[]) => firebase.firestore.FieldValue.arrayRemove(...elements);
+
 @Injectable({
     providedIn: 'root'
 })
 export class ReadingDbService implements OnDestroy {
     private userDoc: AngularFirestoreDocument<Item> | null = null;
     private markDayAsReadHandler = (day: string) => this.markDayAsRead(day);
-    private INITIAL_DATA = {
-        days: [],
-        favorites: [],
-        notes: []
-    };
 
     constructor(private auth: AuthService,
                 private events: Events,
@@ -37,7 +38,10 @@ export class ReadingDbService implements OnDestroy {
         }
         events.subscribe(EVENT_FINISHED_READING, this.markDayAsReadHandler);
         events.subscribe(EVENT_USER_LOGIN, (user: any) => {
-            this.userDoc = afs.doc<Item>(`/users/${user.email}`);
+            this.userDoc = user?.email ? afs.doc<Item>(`/users/${user.email}`) : null;
+        });
+        events.subscribe(EVENT_USER_LOGOUT, () => {
+            this.userDoc = null;
         });
     }
 
@@ -46,95 +50,52 @@ export class ReadingDbService implements OnDestroy {
     }
 
     public highlightText(day: string, text: string): void {
-        if (this.auth.userEmail === null) {
+        if (!this.userDoc) {
             return;
         }
-        this.userDoc!.get().subscribe((val) => {
-            if (val.exists) {
-                const data = val.data();
-                if (!data) return;
-                data.notes.push({day: day, text: text});
-                this.userDoc!.update(data).then().catch(err => console.error('Error saving note:', err));
-            } else {
-                const data = { ...this.INITIAL_DATA, notes: [{day: day, text: text}] };
-                this.userDoc!.set(data).then().catch(err => console.error('Error creating document:', err));
-            }
-        });
+        // arrayUnion + merge creates the doc if absent and is atomic w.r.t. concurrent writes.
+        this.userDoc.set({notes: arrayUnion({day, text})} as unknown as Item, {merge: true})
+            .catch(err => console.error('Error saving note:', err));
     }
 
     public removeHighlightedText(day: string, text: string): void {
-        if (this.auth.userEmail === null) {
+        if (!this.userDoc) {
             return;
         }
-        this.userDoc!.get().subscribe((val) => {
-            if (!val.exists) {
-                return;
-            }
-            const data = val.data();
-            if (!data) return;
-            const idx = this.searchNoteInNotes(data.notes, day, text);
-            if (idx !== -1) {
-                data.notes.splice(idx, 1);
-                this.userDoc!.update(data).then().catch(err => console.error('Error removing note:', err));
-            }
-        });
+        // arrayRemove matches array elements by deep equality, so {day, text} removes the exact note.
+        this.userDoc.set({notes: arrayRemove({day, text})} as unknown as Item, {merge: true})
+            .catch(err => console.error('Error removing note:', err));
     }
 
     userDocValue() {
-        if (this.auth.userEmail === null) {
+        if (!this.userDoc) {
             console.log('User not logged in, not returning days read');
             return EMPTY;
         }
-        return this.userDoc?.valueChanges() ?? EMPTY;
+        return this.userDoc.valueChanges();
     }
 
     toggleFavorite(day: string) {
-        if (this.auth.userEmail === null) {
+        if (!this.userDoc) {
             return;
         }
-        this.userDoc!.get().subscribe((val) => {
-            if (val.exists) {
-                const data = val.data();
-                if (!data) return;
-                const dayIndex = data.favorites.indexOf(day);
-                if (dayIndex === -1) {
-                    data.favorites.push(day);
-                } else {
-                    data.favorites.splice(dayIndex, 1);
-                }
-                this.userDoc!.update(data).then().catch(err => console.error('Error updating favorites:', err));
-            } else {
-                const data = { ...this.INITIAL_DATA, favorites: [day] };
-                this.userDoc!.set(data).then().catch(err => console.error('Error creating document:', err));
-            }
+        const doc = this.userDoc;
+        // Read only to decide direction; the write itself is an atomic field op, so it
+        // never clobbers concurrent changes to days/notes.
+        doc.get().subscribe((snap) => {
+            const isFavorite = (snap.data()?.favorites ?? []).indexOf(day) !== -1;
+            const change = isFavorite ? arrayRemove(day) : arrayUnion(day);
+            doc.set({favorites: change} as unknown as Item, {merge: true})
+                .catch(err => console.error('Error updating favorites:', err));
         });
-    }
-
-    private searchNoteInNotes(notes: Note[], day: string, text: string): number {
-        for (let i = 0; i < notes.length; i++) {
-            const item = notes[i];
-            if (item.day === day && item.text === text) {
-                return i;
-            }
-        }
-        return -1;
     }
 
     private markDayAsRead(day: string): void {
-        if (this.auth.userEmail === null) {
+        if (!this.userDoc) {
             return;
         }
-        this.userDoc!.get().subscribe((val) => {
-            if (val.exists) {
-                const data = val.data();
-                if (data && data.days.indexOf(day) === -1) {
-                    data.days.push(day);
-                    this.userDoc!.update(data).then().catch(err => console.error('Error marking day as read:', err));
-                }
-            } else {
-                const data = { ...this.INITIAL_DATA, days: [day] };
-                this.userDoc!.set(data).then().catch(err => console.error('Error creating document:', err));
-            }
-        });
+        // arrayUnion is idempotent, so no need to read-and-check before writing.
+        this.userDoc.set({days: arrayUnion(day)} as unknown as Item, {merge: true})
+            .catch(err => console.error('Error marking day as read:', err));
     }
 }

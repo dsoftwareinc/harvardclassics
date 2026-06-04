@@ -4,12 +4,11 @@ import {
     createUserWithEmailAndPassword,
     GoogleAuthProvider,
     onAuthStateChanged,
-    sendPasswordResetEmail,
     signInWithEmailAndPassword,
     signInWithPopup,
     signOut,
 } from '@angular/fire/auth';
-import {EVENT_USER_LOGIN} from '../constants';
+import {EVENT_USER_LOGIN, EVENT_USER_LOGOUT} from '../constants';
 import {Events} from "../services/events.service";
 
 @Injectable({
@@ -32,6 +31,7 @@ export class AuthService implements OnDestroy {
                 this.events.publish(EVENT_USER_LOGIN, user);
             } else {
                 localStorage.removeItem('user');
+                this.events.publish(EVENT_USER_LOGOUT);
             }
         });
     }

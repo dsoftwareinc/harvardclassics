@@ -19,7 +19,7 @@ export class NotesPage implements OnInit, OnDestroy {
     this.dbSub = this.db.userDocValue().subscribe(data => {
       if (!data) return;
       this.notes = {};
-      data.notes.forEach(note => {
+      (data.notes ?? []).forEach(note => {
         const key = '2015-' + note.day;
         this.notes[key] = this.notes[key] || [];
         this.notes[key].push({ day: note.day, text: note.text });

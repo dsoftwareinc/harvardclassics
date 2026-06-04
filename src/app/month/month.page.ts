@@ -65,7 +65,7 @@ export class MonthPage implements OnInit, OnDestroy {
     this.dbSub = this.readDb.userDocValue().subscribe((data) => {
       const year = DateTime.now().year;
       this.dateMulti = [];
-      if (data) data.days.forEach((x) => this.dateMulti.push(year + "-" + x));
+      if (data) (data.days ?? []).forEach((x) => this.dateMulti.push(year + "-" + x));
     });
     this.material.ready().then((json) => {
       this.data = json[this.month];
