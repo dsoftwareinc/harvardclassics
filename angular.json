@@ -70,6 +70,12 @@
             },
             "ci": {
               "progress": false
+            },
+            "test": {
+              "polyfills": [
+                "zone.js",
+                "zone.js/testing"
+              ]
             }
           }
         },
@@ -97,32 +103,14 @@
           }
         },
         "test": {
-          "builder": "@angular/build:karma",
+          "builder": "@angular/build:unit-test",
           "options": {
-            "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
+            "buildTarget": "app:build:test",
             "tsConfig": "src/tsconfig.spec.json",
-            "karmaConfig": "src/karma.conf.js",
-            "styles": [],
-            "scripts": [],
-            "assets": [
-              {
-                "glob": "favicon.ico",
-                "input": "src/",
-                "output": "/"
-              },
-              {
-                "glob": "**/*",
-                "input": "src/assets",
-                "output": "/assets"
-              },
-              "src/manifest.json",
-              "src/manifest.webmanifest"
-            ]
+            "runner": "vitest"
           },
           "configurations": {
             "ci": {
-              "progress": false,
               "watch": false
             }
           }

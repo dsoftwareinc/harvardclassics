@@ -1,0 +1,10 @@
+# Browsers the app supports (also drives the esbuild output target).
+# Without this, browserslist falls back to `defaults`, which pulls in pre-2020
+# engines (Opera Mini, KaiOS, old UC) that lack top-level await — breaking the
+# Angular unit-test build. This is the standard Angular CLI matrix.
+last 2 Chrome versions
+last 1 Firefox version
+last 2 Edge major versions
+last 2 Safari major versions
+last 2 iOS major versions
+Firefox ESR

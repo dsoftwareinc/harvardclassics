@@ -1,13 +1,17 @@
 overrides:
   # Security pins for transitive dependencies. pnpm 11 ignores `pnpm.overrides`
   # in package.json, so overrides must live here.
-  protobufjs: '^7.5.8'
+  protobufjs: '^7.6.3'
   '@protobufjs/utf8': '^1.1.1'
-  '@grpc/grpc-js': '^1.9.15'
-  tar: '^7.5.11'
+  '@grpc/grpc-js': '^1.9.16'
+  tar: '^7.5.16'
   minimatch: '^3.1.4'
   rollup: '^4.59.0'
   serialize-javascript: '^7.0.5'
+  # Build-toolchain transitive CVE pins (Vite/esbuild dev server, Babel).
+  vite: '^7.3.5'
+  esbuild: '^0.28.1'
+  '@babel/core': '^7.29.6'
   hono: '^4.12.21'
   '@hono/node-server': '^1.19.13'
   immutable: '^5.1.5'

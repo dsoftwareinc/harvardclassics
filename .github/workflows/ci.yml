@@ -1,0 +1,46 @@
+name: CI
+
+# Run lint + unit tests on every pull request targeting master.
+on:
+  pull_request:
+    branches: [master]
+
+# Cancel an in-progress run when the PR gets new commits.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Lint & test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # pnpm must be installed before setup-node so its cache can resolve the store.
+      # Version comes from the "packageManager" field in package.json.
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # Formatting / linting gate — ESLint flat config (eslint.config.mjs).
+      # Fails the build on errors; tracked `no-explicit-any` warnings do not fail it.
+      - name: Lint & format check
+        run: pnpm lint
+
+      # Unit tests run headless in Node via Vitest (jsdom) — no browser required.
+      # Invoke ng directly so --watch=false isn't swallowed by the npm-script `--`.
+      - name: Run unit tests
+        run: pnpm exec ng test --watch=false
