@@ -1,14 +1,12 @@
 // @ts-check
-// Flat ESLint config (ESLint 10 + angular-eslint 21).
-// Uses the individual angular-eslint / typescript-eslint plugins directly,
-// since the `angular-eslint` / `typescript-eslint` meta-packages are not installed.
-import tsParser from '@typescript-eslint/parser';
-import tsPlugin from '@typescript-eslint/eslint-plugin';
-import angular from '@angular-eslint/eslint-plugin';
-import angularTemplate from '@angular-eslint/eslint-plugin-template';
-import templateParser from '@angular-eslint/template-parser';
+// Flat ESLint config (ESLint 10 + angular-eslint 22).
+// angular-eslint 22 moved its rule presets out of the @angular-eslint/* plugins
+// and into the `angular-eslint` meta-package, so the recommended rule sets are
+// pulled from there (and from `typescript-eslint`) via the tseslint.config helper.
+import tseslint from 'typescript-eslint';
+import angular from 'angular-eslint';
 
-export default [
+export default tseslint.config(
   {
     // src/assets holds the static Harvard Classics reading content (raw HTML,
     // not Angular templates) — never lint it.
@@ -17,19 +15,14 @@ export default [
   // TypeScript source files.
   {
     files: ['**/*.ts'],
-    languageOptions: {
-      parser: tsParser,
-      sourceType: 'module',
-    },
-    plugins: {
-      '@typescript-eslint': tsPlugin,
-      '@angular-eslint': angular,
-    },
+    extends: [
+      ...tseslint.configs.recommended,
+      ...angular.configs.tsRecommended,
+    ],
+    processor: angular.processInlineTemplates,
     rules: {
-      ...tsPlugin.configs.recommended.rules,
-      ...angular.configs.recommended.rules,
       // This app is intentionally NgModule-based with constructor DI (see CLAUDE.md);
-      // these v21 defaults push the opposite architecture, so they're disabled here.
+      // these defaults push the opposite architecture, so they're disabled here.
       '@angular-eslint/prefer-standalone': 'off',
       '@angular-eslint/prefer-inject': 'off',
       // `any` is pervasive and tracked as a Known Issue — surface it without blocking lint.
@@ -39,14 +32,9 @@ export default [
   // Angular HTML templates.
   {
     files: ['**/*.html'],
-    languageOptions: {
-      parser: templateParser,
-    },
-    plugins: {
-      '@angular-eslint/template': angularTemplate,
-    },
-    rules: {
-      ...angularTemplate.configs.recommended.rules,
-    },
+    extends: [
+      ...angular.configs.templateRecommended,
+    ],
+    rules: {},
   },
-];
+);
