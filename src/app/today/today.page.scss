@@ -5,6 +5,18 @@ article {
   user-select: text !important;
 }
 
+#articleContent {
+  font-family: 'Lora', Georgia, 'Iowan Old Style', Charter, 'Times New Roman', serif;
+  font-size: 18px;
+  line-height: 1.7;
+  text-align: left; // override .ion-text-justify on the element
+  hyphens: auto;
+
+  p {
+    margin: 0 0 1.2em;
+  }
+}
+
 ion-footer {
   ion-icon {
     zoom: 2.5;
