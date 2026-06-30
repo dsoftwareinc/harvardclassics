@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import { ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { MaterialService } from "../services/material.service";
 import { ActionSheetController, ScrollCustomEvent } from "@ionic/angular";
@@ -34,6 +34,7 @@ export class TodayPage implements OnInit, OnDestroy {
   private dbSub: Subscription | null = null;
   private clientHeight = 0;
   private markAsRead: boolean = false;
+  private destroyed = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -42,6 +43,7 @@ export class TodayPage implements OnInit, OnDestroy {
     private analytics: AngularFireAnalytics,
     private actionSheetController: ActionSheetController,
     private db: ReadingDbService,
+    private cdr: ChangeDetectorRef,
   ) { }
 
   ngOnInit() {
@@ -98,8 +100,22 @@ export class TodayPage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.destroyed = true;
     this.sub.unsubscribe();
     this.dbSub?.unsubscribe();
+  }
+
+  // Content and Firestore values are assigned in async callbacks (material.ready()
+  // and valueChanges()). On a freshly-created page (e.g. navigating in from the
+  // month calendar) those microtasks can resolve during Ionic's enter transition,
+  // when Angular's zone-driven change detection doesn't re-check the newly attached
+  // view — so the reading text never appears until an in-place update (prev/next)
+  // forces a re-render. Force a local CD pass after each async assignment.
+  private renderNow() {
+    if (this.destroyed) {
+      return;
+    }
+    this.cdr.detectChanges();
   }
 
   calcDay(numberOfDays: number) {
@@ -154,7 +170,8 @@ export class TodayPage implements OnInit, OnDestroy {
       this.header = dayData["title"];
       this.rawHtml = dayData["content"];
       this.html = this.rawHtml;
-      this.content.scrollToTop();
+      this.renderNow();
+      this.content?.scrollToTop();
       this.dbSub = this.db.userDocValue().subscribe((val) => {
         if (!val) return;
         this.isFavorite =
@@ -164,6 +181,7 @@ export class TodayPage implements OnInit, OnDestroy {
           .map((note) => note.text);
         // Always highlight from the pristine content so spans never nest on re-emission.
         this.html = this.highlightedHtml(this.rawHtml, this.notes);
+        this.renderNow();
       });
     });
   }
