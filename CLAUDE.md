@@ -16,7 +16,26 @@ Lint uses ESLint 10 flat config (`eslint.config.mjs`) via the `@angular-eslint/b
 
 Run a single test file by passing `--include` to karma or by modifying the test entry temporarily. There is no shorthand script for this.
 
-Deploy: `firebase deploy` (targets `www/browser/`)
+### Deploy
+
+Firebase Hosting serves `www/browser/` (Firebase project `harvardclassics365`). Always build the service-worker bundle first, then deploy:
+
+```bash
+pnpm run build:prod                                      # → www/browser/ (incl. ngsw.json)
+firebase deploy --only hosting --project harvardclassics365
+```
+
+Non-interactive deploys: the deploy box is headless, so `firebase login` won't work. Authenticate with a service-account key instead:
+
+```bash
+export GOOGLE_APPLICATION_CREDENTIALS=/home/admin/.secrets/harvardclassics-deploy.json
+```
+
+(The key — a `Firebase Hosting Admin` service account for `harvardclassics365` — lives outside the repo at `~/.secrets/`, mode 600. Never commit it.)
+
+**Quirk:** the release step often ends with `HTTP Error: 400 … supplied version <hash> is the current active version`. This is **spurious — the release already went live.** Don't blindly retry; verify by curling the site and confirming it serves the new content-hashed `main-*.js` from `www/browser/index.html`.
+
+Because the app is a PWA, returning users are served the cached build until the service worker updates — hard-refresh (or reopen the installed app) to see a deploy immediately. Drop `--only hosting` to also push `firestore.rules`.
 
 ## Architecture
 
