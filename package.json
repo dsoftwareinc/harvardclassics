@@ -8,7 +8,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "build:prod": "ionic build --prod --service-worker -- --base-href /app/",
+    "build:prod": "ionic build --prod --service-worker",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
