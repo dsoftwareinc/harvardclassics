@@ -17,16 +17,16 @@
     ],
     "headers": [
       {
-        "source": "/build/app/**",
+        "source": "/ngsw.json",
         "headers": [
           {
             "key": "Cache-Control",
-            "value": "public, max-age=31536000"
+            "value": "no-cache"
           }
         ]
       },
       {
-        "source": "sw.js",
+        "source": "/ngsw-worker.js",
         "headers": [
           {
             "key": "Cache-Control",
