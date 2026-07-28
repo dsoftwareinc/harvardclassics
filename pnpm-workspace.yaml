@@ -73,7 +73,7 @@ minimumReleaseAgeExclude:
   - '@angular/build@22.0.3 || 22.0.4'
   - '@angular/cli@22.0.3 || 22.0.4'
   - '@schematics/angular@22.0.3 || 22.0.4'
-  - '@types/node@26.0.0 || 26.0.1'
+  - '@types/node@26.0.0 || 26.0.1 || 26.1.2'
   - '@typescript-eslint/eslint-plugin@8.62.0 || 8.65.0'
   - '@typescript-eslint/parser@8.62.0 || 8.65.0'
   - '@typescript-eslint/project-service@8.62.0 || 8.65.0'
