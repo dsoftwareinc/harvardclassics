@@ -39,7 +39,7 @@ Because the app is a PWA, returning users are served the cached build until the 
 
 ## Architecture
 
-**Stack**: Angular 21 + Ionic 8 + Firebase (PWA)
+**Stack**: Angular 22 + Ionic 8 + Firebase (PWA), TypeScript 6
 
 ### Routing & Modules
 All feature pages are lazy-loaded modules. Routes in `app-routing.module.ts`:

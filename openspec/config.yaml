@@ -1,0 +1,75 @@
+schema: spec-driven
+
+# Project context (optional)
+# This is shown to AI when creating artifacts.
+# Add your tech stack, conventions, style guides, domain knowledge, etc.
+context: |
+  Domain: a PWA that serves the Harvard Classics "15 minutes a day" reading
+  plan — one reading per calendar day, plus per-user progress, favorites and
+  notes. Firebase project: harvardclassics365.
+
+  Tech stack: Angular 22 + Ionic 8 + Firebase, TypeScript 6, Luxon for dates,
+  pnpm. NgModules + constructor DI (intentionally NOT standalone components /
+  inject()). Feature pages are lazy-loaded modules; routes in
+  app-routing.module.ts.
+
+  Commands: `pnpm start` (dev), `pnpm build`, `pnpm run build:prod` (Ionic prod
+  build w/ service worker → www/browser), `pnpm test` (Karma), `pnpm lint`
+  (ESLint flat config). Deploy: `pnpm run build:prod` then
+  `firebase deploy --only hosting --project harvardclassics365`.
+
+  Data model:
+  - Reading content is static JSON in assets/index.json, loaded via
+    MaterialService. It is NOT in Firestore.
+  - User data (days read, favorites, notes) lives in Firestore at
+    /users/{userEmail} — the doc ID is the email, and firestore.rules gates on
+    request.auth.token.email == userId. Accessed via ReadingDbService.
+  - Auth state is persisted to localStorage by AuthService.
+  - Components talk to each other through a hand-rolled `Events` pub/sub
+    service; event-name constants live in constants.ts.
+
+  Conventions and gotchas that specs must respect:
+  - Reading days are stored as "MM-dd" strings with no year. Code prefixes a
+    fixed base year for date math. 2015 is NOT a leap year, so 02-29 breaks —
+    use a leap-year base (2016) in any new code, and keep stored keys aligned
+    with calendar keys.
+  - Firestore writes are atomic field ops: set({field: arrayUnion/arrayRemove},
+    {merge: true}) — never read-modify-write a whole doc. A user doc may hold
+    only some of days/favorites/notes, so guard array reads with `?? []`.
+  - userDocValue() returns valueChanges(), which re-emits on every doc change.
+    Subscriber callbacks must be idempotent.
+  - In TodayPage, `rawHtml` is the pristine content and `html` is the rendered
+    copy with highlight spans. Always derive html from rawHtml so spans don't
+    nest on re-emission.
+  - The Firebase SDK is mixed: auth uses the modular API, Firestore/Analytics
+    still use the deprecated @angular/fire/compat API. New code should prefer
+    modular.
+  - There are currently zero *.spec.ts files, though Karma is wired up.
+  - The Firebase web config in environment*.ts is public by design; access is
+    gated by Firestore rules, not the key.
+
+  Known issues that are fair game to propose against: leap-year date base,
+  pervasive `any` (MaterialService.data, AuthService.user, content ViewChilds),
+  and the compat→modular Firebase migration.
+
+# Per-artifact rules (optional)
+# Add custom rules for specific artifacts.
+# Example:
+#   rules:
+#     proposal:
+#       - Keep proposals under 500 words
+#       - Always include a "Non-goals" section
+#     tasks:
+#       - Break tasks into chunks of max 2 hours
+
+# Per-operation guidance (optional)
+# Add advisory guidance for how apply and archive work should be conducted.
+# This is separate from artifact rules above.
+# Example:
+#   operations:
+#     apply:
+#       guidance:
+#         - Keep test summaries concise
+#     archive:
+#       guidance:
+#         - Summarize the archive outcome before finishing
