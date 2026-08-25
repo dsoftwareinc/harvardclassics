@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 
-import { IonicModule } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular/lazy';
 import { IonCalendarModule } from '@heliomarpm/ion-calendar';
 import { MonthPage } from './month.page';
 

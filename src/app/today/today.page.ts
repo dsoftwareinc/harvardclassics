@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { MaterialService } from "../services/material.service";
-import { ActionSheetController, ScrollCustomEvent } from "@ionic/angular";
+import { ActionSheetController, ScrollCustomEvent } from "@ionic/angular/lazy";
 import { EVENT_FINISHED_READING } from "../constants";
 import { TextSelectEventDirective } from "./text-select-event.directive";
 import { ReadingDbService } from "../services/readingdb.service";
